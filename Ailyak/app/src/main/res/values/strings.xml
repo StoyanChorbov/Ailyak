@@ -60,10 +60,75 @@
     <string name="section_water_photo_one">Water source photo 1</string>
     <string name="section_water_photo_two">Water source photo 2</string>
 
-    <string name="section_shelter_title">Shelter</string>
-    <string name="section_shelter_body">Pick a safe location, insulate from wind and ground, and keep shelter simple and stable.</string>
-    <string name="section_shelter_photo_one">Shelter photo 1</string>
-    <string name="section_shelter_photo_two">Shelter photo 2</string>
+    <string name="section_water_procurement_title">Water Procurement</string>
+    <string name="section_water_procurement_body">Water procurement basics.</string>
+    <string name="section_water_procurement_photo_one">Water procurement image placeholder 1</string>
+    <string name="section_water_procurement_photo_two">Water procurement image placeholder 2</string>
+
+    <string name="water_item_transpiration_bag_title">The Transpiration Bag</string>
+    <string name="water_item_transpiration_bag_image_label">Image placeholder: Clear plastic bag tied over a leafy branch with condensed water pooling at the corner.</string>
+    <string name="water_item_transpiration_bag_step_1">Find a living, broad-leaved tree or bush directly in the sunlight (avoid poisonous plants).</string>
+    <string name="water_item_transpiration_bag_step_2">Place a clear plastic bag over a densely leaved branch and tie the open end tightly shut around the branch.</string>
+    <string name="water_item_transpiration_bag_step_3">Weigh down the bottom corner of the bag with a small pebble so the condensed water pools in one spot. Check back in a few hours.</string>
+
+    <string name="water_item_dew_sponge_title">The Cloth Dew Sponge</string>
+    <string name="water_item_dew_sponge_image_label">Image placeholder: Cloth tied around ankles while walking through tall wet morning grass.</string>
+    <string name="water_item_dew_sponge_step_1">Wake up before the sun evaporates the morning dew.</string>
+    <string name="water_item_dew_sponge_step_2">Tie a clean, highly absorbent cloth (like a cotton t-shirt or bandana) around your ankles and walk through tall grass.</string>
+    <string name="water_item_dew_sponge_step_3">Once the cloth is completely soaked, wring the collected water directly into your container. This water is generally safe to drink without boiling.</string>
+
+    <string name="water_item_natural_filter_title">Natural Layer Filter</string>
+    <string name="water_item_natural_filter_image_label">Image placeholder: Inverted bottle filter with layers of gravel, sand, charcoal, and cloth, dripping cleaner water.</string>
+    <string name="water_item_natural_filter_step_1">Create a funnel (e.g., cut the bottom off a plastic bottle, or use bark/cloth). Poke a small hole in the bottom.</string>
+    <string name="water_item_natural_filter_step_2">Pack the funnel in layers from bottom to top: Cloth/grass, crushed charcoal (from your fire), fine sand, and small gravel at the top.</string>
+    <string name="water_item_natural_filter_step_3">Pour murky water slowly through the top. Crucial: This only removes dirt and toxins; it does NOT kill bacteria. You must still boil this water.</string>
+
+    <string name="water_item_boiling_rules_title">Safe Boiling Rules</string>
+    <string name="water_item_boiling_rules_image_label">Image placeholder: Metal canteen over a campfire at a full rolling boil.</string>
+    <string name="water_item_boiling_rules_step_1">Filter your water first to remove floating debris and dirt (see Natural Layer Filter).</string>
+    <string name="water_item_boiling_rules_step_2">Place your metal container in or suspended directly over the fire.</string>
+    <string name="water_item_boiling_rules_step_3">Bring the water to a rapid, rolling boil (large bubbles breaking the surface) and keep it boiling for at least 1 full minute (or 3 minutes if you are at a high altitude). Let cool before drinking.</string>
+
+    <string name="water_item_tracking_hidden_water_title">Tracking Hidden Water</string>
+    <string name="water_item_tracking_hidden_water_image_label">Image placeholder: V-shaped deer tracks in muddy ground leading downhill into a ravine.</string>
+    <string name="water_item_tracking_hidden_water_step_1">Follow the animals. Grazing animals (like deer) usually head toward water at dawn and dusk. Follow their tracks downhill.</string>
+    <string name="water_item_tracking_hidden_water_step_2">Look for insects. Bees rarely fly more than 3-4 miles from their hives, and ants will often march in a straight line toward moisture.</string>
+    <string name="water_item_tracking_hidden_water_step_3">Dig in dry riverbeds. Find the lowest point on the outside edge of a bend in a dry stream and dig down a foot; water will often seep into the hole.</string>
+
+    <string name="section_shelter_title">Emergency Shelter</string>
+    <string name="section_shelter_body">Emergency shelter basics.</string>
+    <string name="section_shelter_photo_one">Emergency shelter image placeholder 1</string>
+    <string name="section_shelter_photo_two">Emergency shelter image placeholder 2</string>
+
+    <string name="shelter_item_safe_location_title">Choosing a Safe Location</string>
+    <string name="shelter_item_safe_location_image_label">Image placeholder: Flat high ground away from widowmakers and low riverbanks.</string>
+    <string name="shelter_item_safe_location_step_1">Avoid the 4 W\'s: Wind (exposed ridges), Water (dry riverbeds that can flash flood), Widowmakers (dead branches hanging above), and Wildlife (game trails or nests).</string>
+    <string name="shelter_item_safe_location_step_2">Look for flat, slightly elevated ground that drains well if it rains.</string>
+    <string name="shelter_item_safe_location_step_3">Clear away rocks, sharp twigs, and debris to create a smooth, flat surface before you start building.</string>
+
+    <string name="shelter_item_ground_insulation_title">Ground Insulation (The Bed)</string>
+    <string name="shelter_item_ground_insulation_image_label">Image placeholder: Person on thick pine-bough bedding above cold ground inside shelter.</string>
+    <string name="shelter_item_ground_insulation_step_1">Never sleep directly on bare dirt or rock. The cold ground will conduct heat away from your body faster than the cold air.</string>
+    <string name="shelter_item_ground_insulation_step_2">Gather dry materials like pine boughs, dry grass, or piles of dead leaves.</string>
+    <string name="shelter_item_ground_insulation_step_3">Build a natural mattress that is at least 6 to 8 inches thick after it is compressed by your body weight.</string>
+
+    <string name="shelter_item_lean_to_title">The Basic Lean-To</string>
+    <string name="shelter_item_lean_to_image_label">Image placeholder: Ridgepole between trees with angled ribs facing a small fire.</string>
+    <string name="shelter_item_lean_to_step_1">Find two trees about 6 feet apart. Lash a thick, sturdy branch (the ridgepole) horizontally between them at chest height.</string>
+    <string name="shelter_item_lean_to_step_2">Lean smaller branches (ribs) closely together against the downwind side of the ridgepole at a 45-degree angle.</string>
+    <string name="shelter_item_lean_to_step_3">Weave smaller twigs horizontally through the ribs, then pile on a thick layer of leaves or pine needles to block wind and rain.</string>
+
+    <string name="shelter_item_debris_hut_title">The Debris Hut (Cold Weather)</string>
+    <string name="shelter_item_debris_hut_image_label">Image placeholder: Wedge-shaped debris hut with a long ridgepole and heavy leaf insulation.</string>
+    <string name="shelter_item_debris_hut_step_1">Prop one end of a strong, 8-foot pole onto a low stump or rock (about waist high). Let the other end rest on the ground.</string>
+    <string name="shelter_item_debris_hut_step_2">Lean short sticks tightly along both sides of the pole to create a small A-frame. It should be just big enough for you to slide into.</string>
+    <string name="shelter_item_debris_hut_step_3">Pile at least 2 to 3 feet of dry leaves, moss, or pine needles over the entire outside of the structure to act as heavy insulation.</string>
+
+    <string name="shelter_item_a_frame_tarp_title">The A-Frame Tarp Shelter</string>
+    <string name="shelter_item_a_frame_tarp_image_label">Image placeholder: Tarp draped over a ridgeline and staked tight into a triangular tent.</string>
+    <string name="shelter_item_a_frame_tarp_step_1">Tie a rope or piece of paracord tightly between two trees at about waist or chest height.</string>
+    <string name="shelter_item_a_frame_tarp_step_2">Drape your emergency blanket or tarp evenly over the line.</string>
+    <string name="shelter_item_a_frame_tarp_step_3">Pull the four corners out tightly to form a triangle and peg them into the ground using sharpened sticks or heavy rocks.</string>
 
     <string name="section_first_aid_title">First Aid</string>
     <string name="section_first_aid_body">Address major bleeding first, clean wounds, and monitor for shock while seeking help.</string>
