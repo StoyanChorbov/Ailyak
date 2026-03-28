@@ -1,7 +1,7 @@
 package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import aubg.hack.ailyak.https.KtorClient
+import aubg.hack.ailyak.https.HttpClient
 import aubg.hack.ailyak.data.model.GbifResponse
 import aubg.hack.ailyak.data.model.PlantOccurrence
 import kotlinx.coroutines.Dispatchers
@@ -17,15 +17,14 @@ class GbifService {
         limit: Int = 20,
         offset: Int = 0
     ): GbifResponse = withContext(Dispatchers.IO) {
-        val json = KtorClient.get(baseUrl, mapOf(
+        val json = HttpClient.get(baseUrl, mapOf(
             "country"       to countryCode,
             "kingdomKey"    to "6",
             "hasCoordinate" to "true",
             "limit"         to limit.toString(),
             "offset"        to offset.toString()
         ))
-
-        gson.fromJson(json.toString(), GbifResponse::class.java)
+        gson.fromJson(json, GbifResponse::class.java)
     }
 
     suspend fun getAllPlantsByCountry(countryCode: String): List<PlantOccurrence> {

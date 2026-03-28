@@ -1,7 +1,7 @@
 package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import aubg.hack.ailyak.https.KtorClient
+import aubg.hack.ailyak.https.HttpClient
 import aubg.hack.ailyak.data.model.OverpassResponse
 import aubg.hack.ailyak.data.model.OverpassElement
 import aubg.hack.ailyak.data.model.WaterSource
@@ -26,8 +26,8 @@ class WaterSourceService {
     ): List<WaterSource> = withContext(Dispatchers.IO) {
         val query = buildOverpassQuery(lat, lon, radiusMetres)
         val encoded = URLEncoder.encode(query, "UTF-8")
-        val json = KtorClient.get("$overpassUrl?data=$encoded")
-        val response = gson.fromJson(json.toString(), OverpassResponse::class.java)
+        val json = HttpClient.get("$overpassUrl?data=$encoded")
+        val response = gson.fromJson(json, OverpassResponse::class.java)
         response.elements.mapNotNull { it.toWaterSource() }
     }
 

@@ -1,7 +1,7 @@
 package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import aubg.hack.ailyak.https.KtorClient
+import aubg.hack.ailyak.https.HttpClient
 import aubg.hack.ailyak.data.model.PlantDetails
 import aubg.hack.ailyak.data.model.PerenualResponse
 import kotlinx.coroutines.Dispatchers
@@ -15,11 +15,11 @@ class PerenualService(private val apiKey: String) {
     suspend fun getPlantSafety(scientificName: String): PlantDetails? =
         withContext(Dispatchers.IO) {
             runCatching {
-                val json = KtorClient.get(baseUrl, mapOf(
+                val json = HttpClient.get(baseUrl, mapOf(
                     "key" to apiKey,
                     "q"   to scientificName
                 ))
-                gson.fromJson(json.toString(), PerenualResponse::class.java).data.firstOrNull()
+                gson.fromJson(json, PerenualResponse::class.java).data.firstOrNull()
             }.getOrNull()
         }
 }
