@@ -46,9 +46,7 @@ class MainActivity : ComponentActivity() {
                         when (selectedDestination) {
                             BottomNavDestination.SurvivalGuide -> SurvivalGuideRoute(
                                 modifier = Modifier.fillMaxSize(),
-                                renderHomeContent = false,
-                                showTopRightMenu = false,
-                                startAtGuideMenu = true
+                                renderHomeContent = false
                             )
                             BottomNavDestination.Map -> {
                                 OfflineMapDownloadScreen(modifier = Modifier.fillMaxSize())
