@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">Ailyak</string>
+    <string name="hamburger_menu_content_description">Open menu</string>
+    <string name="menu_map_layers_title">Map Layers</string>
+    <string name="menu_toggle_plants_food_sources">Plants, Food sources</string>
+    <string name="menu_toggle_water_sources">Water Sources</string>
+    <string name="menu_toggle_wild_life">Wild Life</string>
+    <string name="menu_toggle_signal_nearby">Signal Nearby</string>
+    <string name="menu_item_survival_guide">Survival guide</string>
+
+    <string name="survival_guide_title">Survival Guide</string>
+    <string name="survival_guide_menu_hint">Choose a section:</string>
+    <string name="back_button_text">Back</string>
+
+    <string name="section_firecraft_title">Firecraft</string>
+    <string name="section_firecraft_body">Collect dry tinder and kindling first, then build a stable fire lay before lighting.</string>
+    <string name="section_firecraft_photo_one">Fire setup photo 1</string>
+    <string name="section_firecraft_photo_two">Fire setup photo 2</string>
+
+    <string name="section_water_title">Water</string>
+    <string name="section_water_body">Find flowing water when possible and purify it by boiling, filtering, or chemical treatment.</string>
+    <string name="section_water_photo_one">Water source photo 1</string>
+    <string name="section_water_photo_two">Water source photo 2</string>
+
+    <string name="section_shelter_title">Shelter</string>
+    <string name="section_shelter_body">Pick a safe location, insulate from wind and ground, and keep shelter simple and stable.</string>
+    <string name="section_shelter_photo_one">Shelter photo 1</string>
+    <string name="section_shelter_photo_two">Shelter photo 2</string>
+
+    <string name="section_first_aid_title">First Aid</string>
+    <string name="section_first_aid_body">Address major bleeding first, clean wounds, and monitor for shock while seeking help.</string>
+    <string name="section_first_aid_photo_one">First aid photo 1</string>
+    <string name="section_first_aid_photo_two">First aid photo 2</string>
+
+    <string name="section_signaling_title">Signaling</string>
+    <string name="section_signaling_body">Use clear visual or sound signals in open areas and repeat patterns to attract attention.</string>
+    <string name="section_signaling_photo_one">Signaling photo 1</string>
+    <string name="section_signaling_photo_two">Signaling photo 2</string>
 </resources>
