@@ -12,6 +12,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -41,12 +43,19 @@ data class AppMenuItem(
     val onClick: () -> Unit
 )
 
+data class AppToggleItem(
+    val label: String,
+    val checked: Boolean,
+    val onCheckedChange: (Boolean) -> Unit
+)
+
 @Composable
 fun AppTopRightMenu(
     isExpanded: Boolean,
     onToggle: () -> Unit,
     onDismiss: () -> Unit,
     items: List<AppMenuItem>,
+    toggleItems: List<AppToggleItem> = emptyList(),
     modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -137,6 +146,43 @@ fun AppTopRightMenu(
                         .height(1.dp)
                         .background(Color(0xFF626262))
                 )
+
+                if (toggleItems.isNotEmpty()) {
+                    Text(
+                        text = stringResource(id = R.string.menu_map_layers_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = Color(0xFFF2F2F2),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp)
+                    )
+
+                    toggleItems.forEach { item ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = item.label,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color(0xFFF2F2F2),
+                                modifier = Modifier.weight(1f)
+                            )
+                            Switch(
+                                checked = item.checked,
+                                onCheckedChange = item.onCheckedChange
+                            )
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(Color(0xFF626262))
+                    )
+                }
 
                 items.forEach { item ->
                     Text(
