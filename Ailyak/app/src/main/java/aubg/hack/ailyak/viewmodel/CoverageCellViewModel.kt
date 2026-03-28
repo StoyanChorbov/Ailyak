@@ -16,6 +16,6 @@ data class CoverageCellViewModel(
     )
 
 data class CoverageCellsViewModelList(
-    val cells: List<CoverageCellsViewModelList>,
+    val cells: List<CoverageCellViewModel>,
     val cellsCount:Int
 )
