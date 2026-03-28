@@ -20,8 +20,6 @@ sealed class CoverageCellState {
 
 class CoverageCellViewModel(context: Context) : ViewModel() {
 
-    private val cellService = CoverageCellService()
-
     private val _state = MutableStateFlow<CoverageCellState>(CoverageCellState.Idle)
     val state: StateFlow<CoverageCellState> = _state
 
@@ -47,7 +45,7 @@ class CoverageCellViewModel(context: Context) : ViewModel() {
         viewModelScope.launch {
             _state.value = CoverageCellState.Loading
             _state.value = runCatching {
-                val result = cellService.fetchCellTowersInArea(params).getOrThrow()
+                val result = CoverageCellService.fetchCellTowersInArea(params).getOrThrow()
                 CoverageCellState.Success(
                     cells = result.cells,
                     count = result.cellsCount

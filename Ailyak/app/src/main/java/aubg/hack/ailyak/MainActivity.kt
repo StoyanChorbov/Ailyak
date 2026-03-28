@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import aubg.hack.ailyak.ui.screens.OfflineMapDownloadScreen
 import aubg.hack.ailyak.ui.components.AppBottomNavigation
 import aubg.hack.ailyak.ui.components.BottomNavDestination
 import aubg.hack.ailyak.ui.survivalguide.SurvivalGuideRoute
@@ -45,17 +46,15 @@ class MainActivity : ComponentActivity() {
                         when (selectedDestination) {
                             BottomNavDestination.SurvivalGuide -> SurvivalGuideRoute(
                                 modifier = Modifier.fillMaxSize(),
-                                renderHomeContent = false,
-                                showTopRightMenu = false,
-                                startAtGuideMenu = true
+                                renderHomeContent = false
                             )
-
-                            BottomNavDestination.Map -> SurvivalGuideRoute(
-                                modifier = Modifier.fillMaxSize(),
-                                renderHomeContent = true,
-                                showTopRightMenu = true,
-                                startAtGuideMenu = false
-                            )
+                            BottomNavDestination.Map -> {
+                                OfflineMapDownloadScreen(modifier = Modifier.fillMaxSize())
+                                SurvivalGuideRoute(
+                                    modifier = Modifier.fillMaxSize(),
+                                    renderHomeContent = false
+                                )
+                            }
 
                             BottomNavDestination.Settings -> SettingsPlaceholderPage()
                         }
