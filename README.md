@@ -1,0 +1,2 @@
+# Ailyak
+Ailyak sme, maina
