@@ -1,14 +1,18 @@
 package aubg.hack.ailyak.ui.survivalguide
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import aubg.hack.ailyak.R
 import aubg.hack.ailyak.ui.components.AppMenuItem
@@ -25,7 +29,10 @@ private sealed interface GuideScreen {
 }
 
 @Composable
-fun SurvivalGuideRoute(modifier: Modifier = Modifier) {
+fun SurvivalGuideRoute(
+    modifier: Modifier = Modifier,
+    renderHomeContent: Boolean = true
+) {
     var currentScreen: GuideScreen by remember { mutableStateOf(GuideScreen.Home) }
     var isAppMenuExpanded by remember { mutableStateOf(false) }
 
@@ -49,15 +56,41 @@ fun SurvivalGuideRoute(modifier: Modifier = Modifier) {
     }
 
     Box(modifier = modifier.fillMaxSize()) {
+        if (renderHomeContent) {
+            HomeScreen(modifier = Modifier.fillMaxSize())
+        }
+
         when (val screen = currentScreen) {
-            GuideScreen.Home -> HomeScreen()
-            GuideScreen.Menu -> GuideMenuScreen(
-                sections = guideSections,
-                onBack = { currentScreen = GuideScreen.Home },
-                onSectionClick = { sectionIndex -> currentScreen = GuideScreen.Detail(sectionIndex) }
-            )
+            GuideScreen.Home -> Unit
+            GuideScreen.Menu -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {}
+                        )
+                )
+                GuideMenuScreen(
+                    sections = guideSections,
+                    onBack = { currentScreen = GuideScreen.Home },
+                    onSectionClick = { sectionIndex -> currentScreen = GuideScreen.Detail(sectionIndex) }
+                )
+            }
 
             is GuideScreen.Detail -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {}
+                        )
+                )
                 GuideDetailScreen(
                     section = guideSections[screen.sectionIndex],
                     onBack = { currentScreen = GuideScreen.Menu }
