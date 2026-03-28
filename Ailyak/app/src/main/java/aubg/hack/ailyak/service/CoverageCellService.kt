@@ -8,9 +8,9 @@ import aubg.hack.ailyak.https.KtorClient
 import org.json.JSONObject
 import kotlin.mapCatching
 
-class CoverageCellService(private val context: Context) {
-    val locationService = LocationService(context)
-    suspend fun fetchCellTowersInArea(cell: CoverageCellParams):Result<CoverageCellsList>{
+class CoverageCellService() {
+    val locationService = LocationService()
+    suspend fun fetchCellTowersInArea(cell: CoverageCell):Result<CoverageCellsViewModelList>{
 
         return KtorClient.get(CellConstants.apiUrl+"cell/getInArea",
             params = mapOf(
