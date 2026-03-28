@@ -9,6 +9,14 @@ kotlin {
     }
 }
 
+configurations.all {
+    exclude(group = "com.google.guava", module = "listenablefuture")
+    exclude(group = "com.google.guava", module = "guava-jdk5")
+
+    resolutionStrategy {
+        force("com.google.guava:guava:32.1.3-android")
+    }
+}
 android {
     namespace = "aubg.hack.ailyak"
     compileSdk {
@@ -64,6 +72,7 @@ dependencies {
     implementation (libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,4 +81,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.kotlinx.coroutines.play.services)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
 }

@@ -14,6 +14,7 @@ composeBom = "2026.03.01"
 mapsCompose = "8.2.2"
 mapsComposeNdk27 = "11.20.2"
 playServicesLocation = "21.3.0"
+compiler = "3.2.0-alpha11"
 
 [libraries]
 android-ndk27 = { module = "com.mapbox.maps:android-ndk27", version.ref = "androidNdk27" }
@@ -39,6 +40,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version = "3.4.2" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 maps-compose-ndk27 = { module = "com.mapbox.extension:maps-compose-ndk27", version.ref = "mapsComposeNdk27" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+androidx-compiler = { group = "androidx.databinding", name = "compiler", version.ref = "compiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
