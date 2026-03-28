@@ -2,7 +2,7 @@ package aubg.hack.ailyak.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import aubg.hack.ailyak.model.WaterSource
+import aubg.hack.ailyak.data.model.WaterSource
 import aubg.hack.ailyak.service.WaterSourceService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
