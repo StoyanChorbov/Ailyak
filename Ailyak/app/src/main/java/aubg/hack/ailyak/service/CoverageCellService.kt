@@ -3,14 +3,13 @@ package aubg.hack.ailyak.service
 import android.content.Context
 import aubg.hack.ailyak.CellConstants
 import aubg.hack.ailyak.data.model.*
-import aubg.hack.ailyak.data.model.CoverageCellsList
 import aubg.hack.ailyak.https.KtorClient
 import org.json.JSONObject
 import kotlin.mapCatching
 
 class CoverageCellService() {
     val locationService = LocationService()
-    suspend fun fetchCellTowersInArea(cell: CoverageCell):Result<CoverageCellsViewModelList>{
+    suspend fun fetchCellTowersInArea(cell: CoverageCellParams):Result<CoverageCellsList>{
 
         return KtorClient.get(CellConstants.apiUrl+"cell/getInArea",
             params = mapOf(
