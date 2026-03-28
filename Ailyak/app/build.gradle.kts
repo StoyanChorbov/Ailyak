@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization") version "2.3.0"
 }
 
 android {
@@ -53,6 +54,9 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.android.ndk27)
     implementation(libs.maps.compose.ndk27)
+    implementation (libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
