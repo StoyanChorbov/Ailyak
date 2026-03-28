@@ -45,7 +45,7 @@ fun SurvivalMap(
             mapViewportState.transitionToFollowPuckState()
 
             mapView.mapboxMap.loadStyle(mapView.mapboxMap.style, {
-                        viewModel.onMapReady(mapView.getMapboxMap())
+                        viewModel.onMapReady(mapView.mapboxMap)
                     })
         }
     }
