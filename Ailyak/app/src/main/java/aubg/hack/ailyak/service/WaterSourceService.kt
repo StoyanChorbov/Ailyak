@@ -1,10 +1,10 @@
 package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import aubg.hack.ailyak.http.HttpClient
-import aubg.hack.ailyak.model.OverpassResponse
-import aubg.hack.ailyak.model.OverpassElement
-import aubg.hack.ailyak.model.WaterSource
+import aubg.hack.ailyak.https.HttpClient
+import aubg.hack.ailyak.data.model.OverpassResponse
+import aubg.hack.ailyak.data.model.OverpassElement
+import aubg.hack.ailyak.data.model.WaterSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URLEncoder

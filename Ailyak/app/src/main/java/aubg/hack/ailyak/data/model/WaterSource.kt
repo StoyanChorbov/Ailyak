@@ -1,4 +1,4 @@
-package aubg.hack.ailyak.model
+package aubg.hack.ailyak.data.model
 
 data class WaterSource(
     val id: Long,

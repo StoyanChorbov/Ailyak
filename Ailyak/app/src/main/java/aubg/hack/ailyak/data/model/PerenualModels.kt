@@ -1,4 +1,4 @@
-package com.plantservice.model
+package aubg.hack.ailyak.data.model
 
 data class PerenualResponse(
     val data: List<PlantDetails>

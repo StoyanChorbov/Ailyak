@@ -1,4 +1,4 @@
-package com.plantservice.model
+package aubg.hack.ailyak.data.model
 
 data class PlantSafetyInfo(
     val species: String,

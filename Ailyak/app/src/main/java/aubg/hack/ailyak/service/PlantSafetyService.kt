@@ -1,7 +1,7 @@
-package com.plantservice.service
+package aubg.hack.ailyak.service
 
-import com.plantservice.model.PlantOccurrence
-import com.plantservice.model.PlantSafetyInfo
+import aubg.hack.ailyak.data.model.PlantOccurrence
+import aubg.hack.ailyak.data.model.PlantSafetyInfo
 
 class PlantSafetyService(
     private val gbifService: GbifService,

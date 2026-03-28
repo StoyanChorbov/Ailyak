@@ -1,9 +1,9 @@
-package com.plantservice.service
+package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import com.plantservice.http.HttpClient
-import com.plantservice.model.PerenualResponse
-import com.plantservice.model.PlantDetails
+import aubg.hack.ailyak.https.HttpClient
+import aubg.hack.ailyak.data.model.PlantDetails
+import aubg.hack.ailyak.data.model.PerenualResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

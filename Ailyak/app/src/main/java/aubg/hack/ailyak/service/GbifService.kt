@@ -1,9 +1,9 @@
-package com.plantservice.service
+package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import com.plantservice.http.HttpClient
-import com.plantservice.model.GbifResponse
-import com.plantservice.model.PlantOccurrence
+import aubg.hack.ailyak.service.https.HttpClient
+import aubg.hack.ailyak.data.model.GbifResponse
+import aubg.hack.ailyak.data.model.PlantOccurrence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,5 +1,4 @@
-package com.plantservice.model
-
+package aubg.hack.ailyak.data.model
 data class GbifResponse(
     val count: Int,
     val offset: Int,
