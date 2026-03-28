@@ -2,13 +2,13 @@ package aubg.hack.ailyak.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import aubg.hack.ailyak.data.model.PlantSafetyInfo
 import aubg.hack.ailyak.service.GbifService
 import aubg.hack.ailyak.service.PerenualService
-import aubg.hack.ailyak.service.PlantSafetyService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import aubg.hack.ailyak.data.model.*
+import aubg.hack.ailyak.service.PlantSafetyService
 
 sealed class PlantSafetyState {
     object Idle : PlantSafetyState()

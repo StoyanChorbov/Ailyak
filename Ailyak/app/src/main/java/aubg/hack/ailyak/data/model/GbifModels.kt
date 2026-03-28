@@ -4,7 +4,7 @@ data class GbifResponse(
     val offset: Int,
     val limit: Int,
     val endOfRecords: Boolean,
-    val results: List<PlantOccurrence>
+    val plantsByCountry: List<PlantOccurrence>
 )
 
 data class PlantOccurrence(
