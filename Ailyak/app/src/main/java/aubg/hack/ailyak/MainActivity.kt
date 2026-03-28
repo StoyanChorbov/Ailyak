@@ -5,58 +5,102 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import aubg.hack.ailyak.ui.OfflineMapDownloadScreen
-import aubg.hack.ailyak.ui.components.StartLocationTrackingButton
-import aubg.hack.ailyak.ui.components.StopLocationTrackingButton
-import aubg.hack.ailyak.ui.components.SurvivalMap
 import aubg.hack.ailyak.ui.survivalguide.SurvivalGuideRoute
 import aubg.hack.ailyak.ui.theme.AilyakTheme
 
+private enum class BottomNavDestination {
+    Placeholder,
+    Map,
+    Settings
+}
+
 class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        enableEdgeToEdge()
-//        setContent {
-//            AilyakTheme {
-//                Scaffold { paddingValues ->
-//                    Column(modifier = Modifier.padding(paddingValues)) {
-//                        StartLocationTrackingButton(Modifier.padding(top = 240.dp))
-//                        StopLocationTrackingButton(Modifier.padding(bottom = 240.dp))
-//                    }
-//                }
-//            }
-//        }
-//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
         setContent {
             AilyakTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                var selectedDestination by rememberSaveable { mutableStateOf(BottomNavDestination.Map) }
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        NavigationBar {
+                            BottomNavDestination.entries.forEach { destination ->
+                                NavigationBarItem(
+                                    selected = destination == selectedDestination,
+                                    onClick = { selectedDestination = destination },
+                                    icon = {
+                                        Text(
+                                            text = when (destination) {
+                                                BottomNavDestination.Placeholder -> "L"
+                                                BottomNavDestination.Map -> "M"
+                                                BottomNavDestination.Settings -> "S"
+                                            }
+                                        )
+                                    },
+                                    label = {
+                                        Text(
+                                            text = when (destination) {
+                                                BottomNavDestination.Placeholder -> stringResource(id = R.string.bottom_nav_left_placeholder)
+                                                BottomNavDestination.Map -> stringResource(id = R.string.bottom_nav_map)
+                                                BottomNavDestination.Settings -> stringResource(id = R.string.bottom_nav_settings)
+                                            }
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                ) { innerPadding ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        OfflineMapDownloadScreen(modifier = Modifier.fillMaxSize())
-                        SurvivalGuideRoute(
-                            modifier = Modifier.fillMaxSize(),
-                            renderHomeContent = false
-                        )
+                        when (selectedDestination) {
+                            BottomNavDestination.Placeholder -> LeftPlaceholderPage()
+                            BottomNavDestination.Map -> {
+                                OfflineMapDownloadScreen(modifier = Modifier.fillMaxSize())
+                                SurvivalGuideRoute(
+                                    modifier = Modifier.fillMaxSize(),
+                                    renderHomeContent = false
+                                )
+                            }
+
+                            BottomNavDestination.Settings -> SettingsPlaceholderPage()
+                        }
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun LeftPlaceholderPage() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text = stringResource(id = R.string.bottom_nav_left_placeholder))
+    }
+}
+
+@Composable
+private fun SettingsPlaceholderPage() {
+    Box(modifier = Modifier.fillMaxSize())
 }
