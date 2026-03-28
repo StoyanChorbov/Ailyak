@@ -20,7 +20,7 @@ sealed class CoverageCellState {
 
 class CoverageCellViewModel(context: Context) : ViewModel() {
 
-    private val cellService = CoverageCellService(context)
+    private val cellService = CoverageCellService()
 
     private val _state = MutableStateFlow<CoverageCellState>(CoverageCellState.Idle)
     val state: StateFlow<CoverageCellState> = _state
