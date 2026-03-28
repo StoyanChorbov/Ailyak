@@ -35,11 +35,12 @@ fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
         MapDownloadService.downloadOfflineRegion(polygon)
     }
 
+
     Box(modifier = modifier.fillMaxSize()) {
-        SurvivalMap(point = center, onPointSelected = {
-            center = it
-            showDownloadButton = true
-        })
+//        SurvivalMap(Point = center, onPointSelected = {
+//            center = it
+//            showDownloadButton = true
+//        })
 
         if (showDownloadButton) {
             FloatingActionButton(onClick = { downloadMap() }, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 72.dp) ) {
