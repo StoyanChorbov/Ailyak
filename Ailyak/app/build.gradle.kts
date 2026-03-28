@@ -1,8 +1,15 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
+
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+
 kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
@@ -31,8 +38,13 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField(
+            "String",
+            "OPENCELLID_API_KEY",
+            "\"${localProperties["OPENCELLID_API_KEY"]}\""
+        )
+        buildConfigField ("String", "PERENUAL_API_KEY", "\"${localProperties["PERENUAL_API_KEY"]}\"")
     }
 
     buildTypes {
@@ -51,6 +63,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig=true
     }
 
 }

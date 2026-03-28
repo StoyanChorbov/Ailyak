@@ -20,7 +20,7 @@ sealed class PlantSafetyState {
 class PlantSafetyViewModel : ViewModel() {
 
     private val gbifService        = GbifService()
-    private val perenualService    = PerenualService(apiKey = "YOUR_PERENUAL_API_KEY")
+    private val perenualService    = PerenualService()
     private val plantSafetyService = PlantSafetyService(gbifService, perenualService)
 
     private val _state = MutableStateFlow<PlantSafetyState>(PlantSafetyState.Idle)

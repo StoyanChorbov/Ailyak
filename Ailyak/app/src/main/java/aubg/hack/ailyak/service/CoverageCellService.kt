@@ -1,5 +1,6 @@
 package aubg.hack.ailyak.service
 
+import aubg.hack.ailyak.BuildConfig
 import aubg.hack.ailyak.CellConstants
 import aubg.hack.ailyak.data.model.CoverageCell
 import aubg.hack.ailyak.data.model.CoverageCellParams
@@ -12,7 +13,7 @@ object CoverageCellService {
 
         return KtorClient.get(CellConstants.apiUrl+"cell/getInArea",
             params = mapOf(
-                //"apiKey"    to,
+                "apiKey"    to BuildConfig.OPENCELLID_API_KEY,
                 "latmin"   to cell.latituteMin.toString(),
                 "lonmin" to cell.longitudeMin.toString(),
                 "latmax"  to cell.latituteMax.toString(),
