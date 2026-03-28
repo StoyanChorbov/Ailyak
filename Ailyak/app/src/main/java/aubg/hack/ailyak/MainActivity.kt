@@ -52,10 +52,10 @@ class MainActivity : ComponentActivity() {
                             )
                             BottomNavDestination.Map -> {
                                 OfflineMapDownloadScreen(modifier = Modifier.fillMaxSize())
-                                SurvivalGuideRoute(
-                                    modifier = Modifier.fillMaxSize(),
-                                    renderHomeContent = false
-                                )
+//                                SurvivalGuideRoute(
+//                                    modifier = Modifier.fillMaxSize(),
+//                                    renderHomeContent = false
+//                                )
                             }
 
                             BottomNavDestination.Settings -> SettingsPlaceholderPage()
