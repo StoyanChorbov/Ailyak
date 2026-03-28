@@ -1,7 +1,7 @@
 package aubg.hack.ailyak.service
 
 import com.google.gson.Gson
-import aubg.hack.ailyak.service.https.HttpClient
+import aubg.hack.ailyak.https.HttpClient
 import aubg.hack.ailyak.data.model.GbifResponse
 import aubg.hack.ailyak.data.model.PlantOccurrence
 import kotlinx.coroutines.Dispatchers
