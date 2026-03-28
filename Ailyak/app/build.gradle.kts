@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.google.devtools.ksp")
 }
 
 val localProperties = Properties().apply {
@@ -88,6 +89,9 @@ dependencies {
     implementation(libs.ktor.client.cio)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import aubg.hack.ailyak.data.model.CoverageCellParams
 import aubg.hack.ailyak.service.CoverageCellService
 import aubg.hack.ailyak.service.MapDownloadService
+import aubg.hack.ailyak.service.PlantSafetyService
 import aubg.hack.ailyak.service.WaterSourceService
 import aubg.hack.ailyak.ui.components.ClickableMap
 import com.mapbox.geojson.Point
@@ -54,7 +55,7 @@ fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
                 mobileNetworkCode = null,
                 mobileCountryCode = null,
             ))
-//            val plants = TODO()
+            val plants = PlantSafetyService.getPlantSafetyInfoNearby(lat, lon, radius)
             val waterSources = WaterSourceService.getDrinkingWaterNearby(lat, lon,
                 (radius * 1000).toInt()
             )

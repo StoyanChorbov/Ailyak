@@ -16,7 +16,7 @@ object WaterSourceService {
         lat: Double,
         lon: Double,
         radiusMetres: Int = WaterSourceConstants.defaultRadius
-    ): Result<List<WaterSource>> {
+    ): List<WaterSource> {
         val query = buildOverpassQuery(lat, lon, radiusMetres)
         val encoded = withContext(Dispatchers.IO) {
             URLEncoder.encode(query, "UTF-8")
@@ -24,23 +24,26 @@ object WaterSourceService {
 
         return KtorClient.get("${WaterSourceConstants.apiUrl}overpassUrl?data=$encoded")
             .mapCatching { json -> parseWaterSources(json) }
+            .getOrElse {
+                throw it
+            }
     }
 
     suspend fun getDrinkingWaterNearby(
         lat: Double,
         lon: Double,
         radiusMetres: Int = WaterSourceConstants.defaultRadius
-    ): Result<List<WaterSource>> =
+    ): List<WaterSource> =
         getWaterSourcesNearby(lat, lon, radiusMetres)
-            .map { list -> list.filter { it.type == "drinking_water" && it.access != "private" } }
+            .let { list -> list.filter { it.type == "drinking_water" && it.access != "private" } }
 
     suspend fun getSpringsNearby(
         lat: Double,
         lon: Double,
         radiusMetres: Int = WaterSourceConstants.defaultRadius
-    ): Result<List<WaterSource>> =
+    ): List<WaterSource> =
         getWaterSourcesNearby(lat, lon, radiusMetres)
-            .map { list -> list.filter { it.type == "spring" } }
+            .let { list -> list.filter { it.type == "spring" } }
 
     private fun parseWaterSources(json: String): List<WaterSource> {
         val root = JSONObject(json)

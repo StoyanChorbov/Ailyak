@@ -25,7 +25,7 @@ class WaterSourceViewModel : ViewModel() {
             _state.value = WaterSourceState.Loading
             _state.value = runCatching {
                 WaterSourceState.Success(
-                    WaterSourceService.getWaterSourcesNearby(lat, lon, radiusMetres).getOrThrow()
+                    WaterSourceService.getWaterSourcesNearby(lat, lon, radiusMetres)
                 )
             }.getOrElse {
                 WaterSourceState.Error(it.message ?: "Unknown error")
@@ -38,7 +38,7 @@ class WaterSourceViewModel : ViewModel() {
             _state.value = WaterSourceState.Loading
             _state.value = runCatching {
                 WaterSourceState.Success(
-                    WaterSourceService.getDrinkingWaterNearby(lat, lon, radiusMetres).getOrThrow()
+                    WaterSourceService.getDrinkingWaterNearby(lat, lon, radiusMetres)
                 )
             }.getOrElse {
                 WaterSourceState.Error(it.message ?: "Unknown error")
@@ -51,7 +51,7 @@ class WaterSourceViewModel : ViewModel() {
             _state.value = WaterSourceState.Loading
             _state.value = runCatching {
                 WaterSourceState.Success(
-                    WaterSourceService.getSpringsNearby(lat, lon, radiusMetres).getOrThrow()
+                    WaterSourceService.getSpringsNearby(lat, lon, radiusMetres)
                 )
             }.getOrElse {
                 WaterSourceState.Error(it.message ?: "Unknown error")

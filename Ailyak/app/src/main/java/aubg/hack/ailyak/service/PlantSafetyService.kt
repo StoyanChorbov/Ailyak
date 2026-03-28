@@ -4,10 +4,7 @@ import kotlinx.coroutines.coroutineScope
 import aubg.hack.ailyak.data.model.PlantOccurrence
 import aubg.hack.ailyak.data.model.PlantSafetyInfo
 
-class PlantSafetyService(
-    private val gbifService: GbifService,
-    private val perenualService: PerenualService
-) {
+object PlantSafetyService {
     suspend fun getSafePlantsNearby(
         latitude: Double,
         longitude: Double,
@@ -20,7 +17,7 @@ class PlantSafetyService(
         longitude: Double,
         radiusKm: Double = 50.0
     ): List<PlantSafetyInfo> {
-        val occurrences = gbifService.getAllPlantsByLocation(latitude, longitude, radiusKm)
+        val occurrences = GbifService.getAllPlantsByLocation(latitude, longitude, radiusKm)
         return coroutineScope {
             occurrences
                 .filter { it.species != null }
@@ -30,7 +27,7 @@ class PlantSafetyService(
     }
 
     private suspend fun enrichWithSafetyData(occurrence: PlantOccurrence): PlantSafetyInfo {
-        val safety = perenualService.getPlantSafety(occurrence.species!!)
+        val safety = PerenualService.getPlantSafety(occurrence.species!!)
             .getOrNull()
 
         return PlantSafetyInfo(
