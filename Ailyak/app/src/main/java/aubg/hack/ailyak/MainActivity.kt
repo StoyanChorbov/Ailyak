@@ -14,7 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import aubg.hack.ailyak.ui.OfflineMapDownloadScreen
+import aubg.hack.ailyak.ui.screens.OfflineMapDownloadScreen
 import aubg.hack.ailyak.ui.components.AppBottomNavigation
 import aubg.hack.ailyak.ui.components.BottomNavDestination
 import aubg.hack.ailyak.ui.survivalguide.SurvivalGuideRoute

@@ -1,4 +1,4 @@
-package aubg.hack.ailyak.ui
+package aubg.hack.ailyak.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -21,18 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import aubg.hack.ailyak.service.MapDownloadService
 import aubg.hack.ailyak.ui.components.ClickableMap
-import aubg.hack.ailyak.ui.components.SurvivalMap
 import com.mapbox.geojson.Point
 
 @Composable
 fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
     var showDownloadButton by remember { mutableStateOf(false) }
 
-    var center by remember { mutableStateOf<Point?>(null) }
+    var center by remember { mutableStateOf<Point>(Point.fromLngLat(0.0, 0.0)) }
 
-    fun downloadMap() {
+    fun downloadMapData() {
+        val polygon = MapDownloadService.createBoundingPolygon(center, 5.0)
 
-        val polygon = MapDownloadService.createBoundingPolygon(center!!, 5.0)
+
         MapDownloadService.downloadOfflineRegion(polygon)
     }
 
@@ -44,7 +44,7 @@ fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
         })
 
         if (showDownloadButton) {
-            FloatingActionButton(onClick = { downloadMap() }, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 72.dp) ) {
+            FloatingActionButton(onClick = { downloadMapData() }, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 72.dp) ) {
                 Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.Download, contentDescription = null)
                     Spacer(Modifier.width(4.dp))
