@@ -10,20 +10,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import aubg.hack.ailyak.ui.theme.AilyakTheme
+import com.mapbox.android.core.permissions.PermissionsManager
 
 class MainActivity : ComponentActivity() {
+
+    lateinit var permissionsManager: PermissionsManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             AilyakTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    SomeFunction(Modifier.padding(innerPadding))
                 }
             }
         }
@@ -31,17 +34,4 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AilyakTheme {
-        Greeting("Android")
-    }
-}
+fun SomeFunction(modifier: Modifier) {}

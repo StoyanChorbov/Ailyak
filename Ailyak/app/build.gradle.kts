@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.maps.compose)
     implementation(libs.play.services.location)
+    implementation(libs.android.ndk27)
+    implementation(libs.maps.compose.ndk27)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
