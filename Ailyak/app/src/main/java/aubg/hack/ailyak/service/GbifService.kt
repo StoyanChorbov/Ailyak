@@ -1,0 +1,43 @@
+package com.plantservice.service
+
+import com.google.gson.Gson
+import com.plantservice.http.HttpClient
+import com.plantservice.model.GbifResponse
+import com.plantservice.model.PlantOccurrence
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+class GbifService {
+
+    private val gson = Gson()
+    private val baseUrl = "https://api.gbif.org/v1/occurrence/search"
+
+    suspend fun getPlantsByCountry(
+        countryCode: String,
+        limit: Int = 20,
+        offset: Int = 0
+    ): GbifResponse = withContext(Dispatchers.IO) {
+        val json = HttpClient.get(baseUrl, mapOf(
+            "country"       to countryCode,
+            "kingdomKey"    to "6",
+            "hasCoordinate" to "true",
+            "limit"         to limit.toString(),
+            "offset"        to offset.toString()
+        ))
+        gson.fromJson(json, GbifResponse::class.java)
+    }
+
+    suspend fun getAllPlantsByCountry(countryCode: String): List<PlantOccurrence> {
+        val allResults = mutableListOf<PlantOccurrence>()
+        var offset = 0
+        val limit = 300
+
+        do {
+            val response = getPlantsByCountry(countryCode, limit, offset)
+            allResults.addAll(response.results)
+            offset += limit
+        } while (!response.endOfRecords)
+
+        return allResults
+    }
+}
