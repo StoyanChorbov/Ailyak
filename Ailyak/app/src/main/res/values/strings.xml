@@ -20,6 +20,41 @@
     <string name="section_firecraft_photo_one">Fire setup photo 1</string>
     <string name="section_firecraft_photo_two">Fire setup photo 2</string>
 
+    <string name="section_firecraft_warmth_title">Firecraft &amp; Warmth</string>
+    <string name="section_firecraft_warmth_body">Firecraft and warmth basics.</string>
+    <string name="section_firecraft_warmth_photo_one">Firecraft image placeholder 1</string>
+    <string name="section_firecraft_warmth_photo_two">Firecraft image placeholder 2</string>
+
+    <string name="fire_item_teepee_title">The Teepee Fire (Quick Heat)</string>
+    <string name="fire_item_teepee_image_label">Image placeholder: Twigs in a cone shape over dry tinder in the center.</string>
+    <string name="fire_item_teepee_step_1">Place a handful of dry tinder (grass, bark) in the center of your cleared fire ring.</string>
+    <string name="fire_item_teepee_step_2">Lean small, dry twigs over the tinder in a circular cone (teepee) shape. Leave a small gap to reach the tinder.</string>
+    <string name="fire_item_teepee_step_3">Light the tinder from the bottom. As the teepee burns and collapses, add thicker logs to the pile.</string>
+
+    <string name="fire_item_log_cabin_title">The Log Cabin Fire (Long Burn)</string>
+    <string name="fire_item_log_cabin_image_label">Image placeholder: Crisscross stacked sticks around a small center teepee.</string>
+    <string name="fire_item_log_cabin_step_1">Build a tiny, basic Teepee fire in the center.</string>
+    <string name="fire_item_log_cabin_step_2">Place two thick branches parallel to each other on opposite sides of the teepee.</string>
+    <string name="fire_item_log_cabin_step_3">Place two smaller branches across them perpendicularly. Continue stacking upward for 4 to 5 levels, then light the center teepee.</string>
+
+    <string name="fire_item_lean_to_title">The Lean-To Fire (For Wind/Rain)</string>
+    <string name="fire_item_lean_to_image_label">Image placeholder: Large log on the ground with small sticks leaning over tinder underneath.</string>
+    <string name="fire_item_lean_to_step_1">Find a very thick, slightly damp log and place it horizontally, perpendicular to the direction the wind is blowing.</string>
+    <string name="fire_item_lean_to_step_2">Place your dry tinder bundle right up against the bottom of this large log on the downwind side.</string>
+    <string name="fire_item_lean_to_step_3">Lean smaller, dry sticks over the tinder, resting them on top of the large log. Light the tinder; the large log blocks the wind and reflects heat outward.</string>
+
+    <string name="fire_item_ferro_rod_title">Striking a Ferro Rod</string>
+    <string name="fire_item_ferro_rod_image_label">Image placeholder: Scraper at a 45-degree angle on a ferro rod with sparks falling into tinder.</string>
+    <string name="fire_item_ferro_rod_step_1">Anchor the tip of the Ferro rod firmly directly into the center of your dry tinder bundle.</string>
+    <string name="fire_item_ferro_rod_step_2">Place the metal scraper at a 45-degree angle at the top of the rod.</string>
+    <string name="fire_item_ferro_rod_step_3">Instead of pushing the scraper down (which smashes your tinder), pull the rod firmly backward to drop a shower of 3,000-degree sparks into the tinder.</string>
+
+    <string name="fire_item_wet_tinder_title">Finding Dry Tinder in the Wet</string>
+    <string name="fire_item_wet_tinder_image_label">Image placeholder: Knife carving a feather stick with curled shavings still attached.</string>
+    <string name="fire_item_wet_tinder_step_1">Never take wood from the ground. Break off dead branches that are still attached to standing trees.</string>
+    <string name="fire_item_wet_tinder_step_2">Use your knife to carve away the wet, outer bark until you reach the pale, dry wood underneath.</string>
+    <string name="fire_item_wet_tinder_step_3">Carefully shave the dry wood downward to create thin, curly shavings that stay attached to the stick (Feather Sticks). These will catch a spark even if the forest is soaked.</string>
+
     <string name="section_water_title">Water</string>
     <string name="section_water_body">Find flowing water when possible and purify it by boiling, filtering, or chemical treatment.</string>
     <string name="section_water_photo_one">Water source photo 1</string>
