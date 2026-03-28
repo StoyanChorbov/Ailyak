@@ -3,7 +3,7 @@ package aubg.hack.ailyak.viewmodel
 data class CoverageCellViewModel(
     val id:Int,
     val longitude: Double,
-    val lattitude: Double,
+    val latitude: Double,
     //Mobile country code
     val mobileCountryCode: Int,
     //Mobile network code, ex A1's code

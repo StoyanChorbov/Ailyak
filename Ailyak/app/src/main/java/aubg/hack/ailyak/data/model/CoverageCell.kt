@@ -6,9 +6,9 @@ data class CoverageCell (
     val latmax:Double,
     val lonmax:Double,
    //Mobile country code
-    val mcc: Int,
+    val mobileCountryCode: Int,
    //Mobile network code, ex A1's code
-    val mnc:Int
+    val mobileNetworkCode:Int
 
 
 )
