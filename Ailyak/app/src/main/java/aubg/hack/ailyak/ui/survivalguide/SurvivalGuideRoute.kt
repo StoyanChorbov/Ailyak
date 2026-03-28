@@ -14,15 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import aubg.hack.ailyak.R
-import aubg.hack.ailyak.ui.components.AppToggleItem
+import aubg.hack.ailyak.ui.components.AppMenuItem
 import aubg.hack.ailyak.ui.components.AppTopRightMenu
 import aubg.hack.ailyak.ui.survivalguide.data.guideSections
 import aubg.hack.ailyak.ui.survivalguide.screen.GuideDetailScreen
 import aubg.hack.ailyak.ui.survivalguide.screen.GuideMenuScreen
 import aubg.hack.ailyak.ui.survivalguide.screen.HomeScreen
-import aubg.hack.ailyak.viewmodel.MapLayersViewModel
 
 private sealed interface GuideScreen {
     data object Home : GuideScreen
@@ -33,48 +31,25 @@ private sealed interface GuideScreen {
 @Composable
 fun SurvivalGuideRoute(
     modifier: Modifier = Modifier,
-    renderHomeContent: Boolean = true,
-    showTopRightMenu: Boolean = true,
-    startAtGuideMenu: Boolean = false
+    renderHomeContent: Boolean = true
 ) {
-    val mapLayersViewModel: MapLayersViewModel = viewModel()
-    var currentScreen: GuideScreen by remember(startAtGuideMenu) {
-        mutableStateOf(if (startAtGuideMenu) GuideScreen.Menu else GuideScreen.Home)
-    }
+    var currentScreen: GuideScreen by remember { mutableStateOf(GuideScreen.Home) }
     var isAppMenuExpanded by remember { mutableStateOf(false) }
 
-    val menuItems = emptyList<aubg.hack.ailyak.ui.components.AppMenuItem>()
-
-    val toggleItems = listOf(
-        AppToggleItem(
-            label = stringResource(id = R.string.menu_toggle_plants_food_sources),
-            checked = mapLayersViewModel.showPlantsFoodSources,
-            onCheckedChange = mapLayersViewModel::setPlantsFoodSources
-        ),
-        AppToggleItem(
-            label = stringResource(id = R.string.menu_toggle_water_sources),
-            checked = mapLayersViewModel.showWaterSources,
-            onCheckedChange = mapLayersViewModel::setWaterSources
-        ),
-        AppToggleItem(
-            label = stringResource(id = R.string.menu_toggle_wild_life),
-            checked = mapLayersViewModel.showWildLife,
-            onCheckedChange = mapLayersViewModel::setWildLife
-        ),
-        AppToggleItem(
-            label = stringResource(id = R.string.menu_toggle_signal_nearby),
-            checked = mapLayersViewModel.showSignalNearby,
-            onCheckedChange = mapLayersViewModel::setSignalNearby
-        )
+    val menuItems = listOf(
+        AppMenuItem(label = stringResource(id = R.string.menu_item_survival_guide)) {
+            isAppMenuExpanded = false
+            currentScreen = GuideScreen.Menu
+        }
     )
 
-    BackHandler(enabled = (showTopRightMenu && isAppMenuExpanded) || currentScreen != GuideScreen.Home) {
+    BackHandler(enabled = isAppMenuExpanded || currentScreen != GuideScreen.Home) {
         if (isAppMenuExpanded) {
             isAppMenuExpanded = false
         } else {
             currentScreen = when (currentScreen) {
                 is GuideScreen.Detail -> GuideScreen.Menu
-                GuideScreen.Menu -> if (startAtGuideMenu) GuideScreen.Menu else GuideScreen.Home
+                GuideScreen.Menu -> GuideScreen.Home
                 GuideScreen.Home -> GuideScreen.Home
             }
         }
@@ -88,40 +63,34 @@ fun SurvivalGuideRoute(
         when (val screen = currentScreen) {
             GuideScreen.Home -> Unit
             GuideScreen.Menu -> {
-                if (renderHomeContent) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.35f))
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = {}
-                            )
-                    )
-                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {}
+                        )
+                )
                 GuideMenuScreen(
                     sections = guideSections,
-                    onBack = {
-                        currentScreen = if (startAtGuideMenu) GuideScreen.Menu else GuideScreen.Home
-                    },
+                    onBack = { currentScreen = GuideScreen.Home },
                     onSectionClick = { sectionIndex -> currentScreen = GuideScreen.Detail(sectionIndex) }
                 )
             }
 
             is GuideScreen.Detail -> {
-                if (renderHomeContent) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.35f))
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = {}
-                            )
-                    )
-                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.35f))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {}
+                        )
+                )
                 GuideDetailScreen(
                     section = guideSections[screen.sectionIndex],
                     onBack = { currentScreen = GuideScreen.Menu }
@@ -129,16 +98,13 @@ fun SurvivalGuideRoute(
             }
         }
 
-        if (showTopRightMenu) {
-            AppTopRightMenu(
-                isExpanded = isAppMenuExpanded,
-                onToggle = { isAppMenuExpanded = !isAppMenuExpanded },
-                onDismiss = { isAppMenuExpanded = false },
-                items = menuItems,
-                toggleItems = toggleItems,
-                modifier = modifier.fillMaxSize()
-            )
-        }
+        AppTopRightMenu(
+            isExpanded = isAppMenuExpanded,
+            onToggle = { isAppMenuExpanded = !isAppMenuExpanded },
+            onDismiss = { isAppMenuExpanded = false },
+            items = menuItems,
+            modifier = modifier.fillMaxSize()
+        )
     }
 }
 
