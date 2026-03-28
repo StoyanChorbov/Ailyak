@@ -7,6 +7,6 @@ import aubg.hack.ailyak.ui.components.SurvivalMap
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    SurvivalMap(modifier = modifier.fillMaxSize())
+//    SurvivalMap(modifier = modifier.fillMaxSize())
 }
 

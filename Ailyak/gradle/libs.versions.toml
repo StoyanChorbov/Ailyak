@@ -13,10 +13,13 @@ kotlin = "2.3.20"
 composeBom = "2026.03.01"
 mapsCompose = "8.2.2"
 mapsComposeNdk27 = "11.20.2"
+materialIconsCore = "1.7.8"
 playServicesLocation = "21.3.0"
 
 [libraries]
 android-ndk27 = { module = "com.mapbox.maps:android-ndk27", version.ref = "androidNdk27" }
+androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
