@@ -7,7 +7,7 @@
     <string name="menu_toggle_wild_life">Wild Life</string>
     <string name="menu_toggle_signal_nearby">Signal Nearby</string>
     <string name="menu_item_survival_guide">Survival guide</string>
-    <string name="bottom_nav_left_placeholder">Placeholder</string>
+    <string name="bottom_nav_left_placeholder">Survival Guide</string>
     <string name="bottom_nav_map">Map</string>
     <string name="bottom_nav_settings">Settings</string>
 

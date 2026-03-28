@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import aubg.hack.ailyak.R
 
 enum class BottomNavDestination {
-    Placeholder,
+    SurvivalGuide,
     Map,
     Settings
 }
@@ -28,7 +28,7 @@ fun AppBottomNavigation(
                 icon = {
                     Text(
                         text = when (destination) {
-                            BottomNavDestination.Placeholder -> "L"
+                            BottomNavDestination.SurvivalGuide -> "G"
                             BottomNavDestination.Map -> "M"
                             BottomNavDestination.Settings -> "S"
                         }
@@ -37,7 +37,7 @@ fun AppBottomNavigation(
                 label = {
                     Text(
                         text = when (destination) {
-                            BottomNavDestination.Placeholder -> stringResource(id = R.string.bottom_nav_left_placeholder)
+                            BottomNavDestination.SurvivalGuide -> stringResource(id = R.string.bottom_nav_left_placeholder)
                             BottomNavDestination.Map -> stringResource(id = R.string.bottom_nav_map)
                             BottomNavDestination.Settings -> stringResource(id = R.string.bottom_nav_settings)
                         }

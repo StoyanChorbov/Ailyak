@@ -8,15 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import aubg.hack.ailyak.ui.OfflineMapDownloadScreen
 import aubg.hack.ailyak.ui.components.AppBottomNavigation
 import aubg.hack.ailyak.ui.components.BottomNavDestination
@@ -47,7 +44,12 @@ class MainActivity : ComponentActivity() {
                             .padding(innerPadding)
                     ) {
                         when (selectedDestination) {
-                            BottomNavDestination.Placeholder -> LeftPlaceholderPage()
+                            BottomNavDestination.SurvivalGuide -> SurvivalGuideRoute(
+                                modifier = Modifier.fillMaxSize(),
+                                renderHomeContent = false,
+                                showTopRightMenu = false,
+                                startAtGuideMenu = true
+                            )
                             BottomNavDestination.Map -> {
                                 OfflineMapDownloadScreen(modifier = Modifier.fillMaxSize())
                                 SurvivalGuideRoute(
@@ -65,12 +67,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-private fun LeftPlaceholderPage() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = stringResource(id = R.string.bottom_nav_left_placeholder))
-    }
-}
 
 @Composable
 private fun SettingsPlaceholderPage() {
