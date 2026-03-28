@@ -39,7 +39,7 @@ object MapDownloadService {
             .createTilesetDescriptor(
                 TilesetDescriptorOptions.Builder()
                     .styleURI(Style.MAPBOX_STREETS)
-                    .minZoom(10)
+                    .minZoom(18)
                     .maxZoom(19)
                     .build()
             )
@@ -49,6 +49,8 @@ object MapDownloadService {
             .descriptors(listOf(descriptor))
             .acceptExpired(true)
             .build()
+
+        Log.d("Offline", polygon.toString())
 
         tileStore.loadTileRegion(
             "region-${UUID.randomUUID()}",

@@ -31,7 +31,7 @@ fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
 
     fun downloadMap() {
 
-        val polygon = MapDownloadService.createBoundingPolygon(center!!, 25.0)
+        val polygon = MapDownloadService.createBoundingPolygon(center!!, 5.0)
         MapDownloadService.downloadOfflineRegion(polygon)
     }
 
