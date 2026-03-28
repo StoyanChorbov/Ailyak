@@ -1,17 +1,18 @@
 package aubg.hack.ailyak.service
 
+import aubg.hack.ailyak.BuildConfig
 import aubg.hack.ailyak.https.KtorClient
 import aubg.hack.ailyak.data.model.PlantDetails
 import org.json.JSONObject
 import aubg.hack.ailyak.PerenualConstants
 
-class PerenualService(private val apiKey: String) {
+class PerenualService() {
 
     suspend fun getPlantSafety(scientificName: String): Result<PlantDetails?> {
         return KtorClient.get(
             PerenualConstants.apiUrl+"species-list",
             params = mapOf(
-                "key" to apiKey,
+                "key" to BuildConfig.PERENUAL_API_KEY,
                 "q"   to scientificName
             )
         ).mapCatching { json -> parseFirstPlant(json) }
