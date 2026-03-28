@@ -2,8 +2,8 @@ package aubg.hack.ailyak.service
 
 import android.content.Context
 import aubg.hack.ailyak.CellConstants
-import aubg.hack.ailyak.data.model.CoverageCell
-import aubg.hack.ailyak.viewmodel.*
+import aubg.hack.ailyak.data.model.*
+import aubg.hack.ailyak.data.model.CoverageCellsList
 import aubg.hack.ailyak.https.KtorClient
 import org.json.JSONObject
 import kotlin.mapCatching
@@ -12,7 +12,7 @@ class CoverageCellService() {
     val locationService = LocationService()
     suspend fun fetchCellTowersInArea(cell: CoverageCell):Result<CoverageCellsViewModelList>{
 
-        return KtorClient.get(CellConstants.apiUrl+"/cell/getInArea",
+        return KtorClient.get(CellConstants.apiUrl+"cell/getInArea",
             params = mapOf(
                 //"apiKey"    to,
                 "latmin"   to cell.latituteMin.toString(),
@@ -28,14 +28,14 @@ class CoverageCellService() {
         }
     }
 
-    suspend fun parseCells(json:String):CoverageCellsViewModelList{
+    suspend fun parseCells(json:String):CoverageCellsList{
         val cellsResult = JSONObject(json)
         val cells = cellsResult.getJSONArray("cells")
-        return CoverageCellsViewModelList(
+        return CoverageCellsList(
              cellsCount = cellsResult.getInt("count"),
-            cells= List(cells.length()) { i ->
+             cells= List(cells.length()) { i ->
                 val cell = cells.getJSONObject(i)
-                CoverageCellViewModel(
+                CoverageCell(
                     id = cell.getInt("cellid"),
                     latitude = cell.getDouble("lat"),
                     longitude = cell.getDouble("lon"),

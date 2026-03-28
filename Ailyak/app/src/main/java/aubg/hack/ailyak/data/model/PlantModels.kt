@@ -1,5 +1,15 @@
 package aubg.hack.ailyak.data.model
 
+data class PlantDetails(
+    val id: Int,
+    val commonName: String?,
+    val scientificName: List<String>,
+    val edible: Boolean?,
+    val edibleFruit: Boolean?,
+    val poisonous: Boolean?
+)
+
+
 data class PlantSafetyInfo(
     val species: String,
     val commonName: String?,
@@ -12,3 +22,4 @@ data class PlantSafetyInfo(
     val isSafeToEat: Boolean
         get() = isEdible == true && isPoisonous != true
 }
+
