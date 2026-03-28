@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import aubg.hack.ailyak.service.MapDownloadService
+import aubg.hack.ailyak.ui.components.ClickableMap
 import aubg.hack.ailyak.ui.components.SurvivalMap
 import com.mapbox.geojson.Point
 
@@ -37,10 +38,10 @@ fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
 
 
     Box(modifier = modifier.fillMaxSize()) {
-//        SurvivalMap(Point = center, onPointSelected = {
-//            center = it
-//            showDownloadButton = true
-//        })
+        ClickableMap(point = center, onPointSelected = {
+            center = it
+            showDownloadButton = true
+        })
 
         if (showDownloadButton) {
             FloatingActionButton(onClick = { downloadMap() }, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 72.dp) ) {

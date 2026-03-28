@@ -8,12 +8,16 @@ import aubg.hack.ailyak.location.LocationTracker
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.maps.MapboxMap
+import com.mapbox.maps.Style
 import com.mapbox.maps.extension.style.layers.addLayer
 import com.mapbox.maps.extension.style.layers.generated.lineLayer
 import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
 import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
 import com.mapbox.maps.extension.style.sources.addSource
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
 import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
+import com.mapbox.maps.extension.style.sources.getSource
+import com.mapbox.maps.extension.style.sources.getSourceAs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -67,24 +71,69 @@ class MapViewModel : ViewModel() {
     // ─────────────────────────────────────────
     // LINE BETWEEN LAST TWO LOCATIONS
     // ─────────────────────────────────────────
-
     private fun drawLocationLine(points: List<Point>) {
         viewModelScope.launch(Dispatchers.Main) {
             mapboxMap?.getStyle { style ->
-                clearLayer("location-line-layer", "location-line-source", style)
+                val sourceId = "location-line-source"
+                val layerId = "location-line-layer"
 
-                style.addSource(geoJsonSource("location-line-source") {
-                    geometry(LineString.fromLngLats(points))
-                })
-                style.addLayer(lineLayer("location-line-layer", "location-line-source") {
-                    lineColor("#2196F3")     // blue
-                    lineWidth(4.0)
-                    lineCap(LineCap.ROUND)
-                    lineJoin(LineJoin.ROUND)
-                })
+                val existingSource = style.getSource(sourceId)
+
+                if (existingSource == null) {
+                    style.addSource(geoJsonSource(sourceId) {
+                        geometry(LineString.fromLngLats(points))
+                    })
+
+                    style.addLayer(lineLayer(layerId, sourceId) {
+                        lineColor("#2196F3")
+                        lineWidth(4.0)
+                        lineCap(LineCap.ROUND)
+                        lineJoin(LineJoin.ROUND)
+                    })
+                } else {
+                    val geoJsonSource = style.getSourceAs<GeoJsonSource>(sourceId)
+                    geoJsonSource?.geometry(LineString.fromLngLats(points))
+                }
             }
         }
     }
+//    private fun drawLocationLine(points: List<Point>) {
+//        viewModelScope.launch(Dispatchers.Main) {
+//            mapboxMap?.loadStyle(Style.MAPBOX_STREETS) { style ->
+////                clearLayer("location-line-layer", "location-line-source", style)
+////
+////                style.addSource(geoJsonSource("location-line-source") {
+////                    geometry(LineString.fromLngLats(points))
+////                })
+////                style.addLayer(lineLayer("location-line-layer", "location-line-source") {
+////                    lineColor("#2196F3")     // blue
+////                    lineWidth(4.0)
+////                    lineCap(LineCap.ROUND)
+////                    lineJoin(LineJoin.ROUND)
+////                })
+//                val sourceId = "location-line-source"
+//                val layerId = "location-line-layer"
+//
+//                val existingSource = style.getSource(sourceId)
+//
+//                if (existingSource == null) {
+//                    style.addSource(geoJsonSource(sourceId) {
+//                        geometry(LineString.fromLngLats(points))
+//                    })
+//
+//                    style.addLayer(lineLayer(layerId, sourceId) {
+//                        lineColor("#2196F3")
+//                        lineWidth(4.0)
+//                        lineCap(LineCap.ROUND)
+//                        lineJoin(LineJoin.ROUND)
+//                    })
+//                } else {
+//                    val geoJsonSource = style.getSourceAs<GeoJsonSource>(sourceId)
+//                    geoJsonSource?.geometry(LineString.fromLngLats(points))
+//                }
+//            }
+//        }
+//    }
 
     // Draw the FULL traveled path instead of just last two points
     fun drawFullPath() {
