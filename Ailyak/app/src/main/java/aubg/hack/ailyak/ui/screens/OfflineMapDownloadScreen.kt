@@ -1,5 +1,6 @@
 package aubg.hack.ailyak.ui.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,13 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import aubg.hack.ailyak.data.model.CoverageCellParams
+import aubg.hack.ailyak.service.CoverageCellService
 import aubg.hack.ailyak.service.MapDownloadService
+import aubg.hack.ailyak.service.WaterSourceService
 import aubg.hack.ailyak.ui.components.ClickableMap
 import com.mapbox.geojson.Point
+import kotlinx.coroutines.launch
 
 @Composable
 fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
@@ -29,9 +35,30 @@ fun OfflineMapDownloadScreen(modifier: Modifier = Modifier) {
 
     var center by remember { mutableStateOf<Point>(Point.fromLngLat(0.0, 0.0)) }
 
-    fun downloadMapData() {
-        val polygon = MapDownloadService.createBoundingPolygon(center, 5.0)
+    val scope = rememberCoroutineScope()
 
+    fun downloadMapData() {
+        val radius = 5.0 // in km
+        val polygon = MapDownloadService.createBoundingPolygon(center, radius)
+
+        val lat = center.latitude()
+        val lon = center.longitude()
+
+        scope.launch {
+            val cellTowers = CoverageCellService.fetchCellTowersInArea(CoverageCellParams(
+                latituteMin = lat - radius,
+                latituteMax = lat + radius,
+                longitudeMin = lon - radius,
+                longitudeMax = lon + radius,
+                localAreaCode = null,
+                mobileNetworkCode = null,
+                mobileCountryCode = null,
+            ))
+//            val plants = TODO()
+            val waterSources = WaterSourceService.getDrinkingWaterNearby(lat, lon,
+                (radius * 1000).toInt()
+            )
+        }
 
         MapDownloadService.downloadOfflineRegion(polygon)
     }

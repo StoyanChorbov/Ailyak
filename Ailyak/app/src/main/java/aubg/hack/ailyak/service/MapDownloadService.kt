@@ -16,12 +16,10 @@ object MapDownloadService {
         val lat = center.latitude()
         val lon = center.longitude()
 
-        val delta = distanceKm / 111.0
-
-        val sw = Point.fromLngLat(lon - delta, lat - delta)
-        val se = Point.fromLngLat(lon + delta, lat - delta)
-        val ne = Point.fromLngLat(lon + delta, lat + delta)
-        val nw = Point.fromLngLat(lon - delta, lat + delta)
+        val sw = Point.fromLngLat(lon - distanceKm, lat - distanceKm)
+        val se = Point.fromLngLat(lon + distanceKm, lat - distanceKm)
+        val ne = Point.fromLngLat(lon + distanceKm, lat + distanceKm)
+        val nw = Point.fromLngLat(lon - distanceKm, lat + distanceKm)
 
         return Polygon.fromLngLats(
             listOf(

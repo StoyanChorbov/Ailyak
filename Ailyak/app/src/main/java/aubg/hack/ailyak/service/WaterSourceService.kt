@@ -6,9 +6,11 @@ import aubg.hack.ailyak.data.model.OverpassResponse
 import aubg.hack.ailyak.data.model.WaterSource
 import org.json.JSONObject
 import aubg.hack.ailyak.WaterSourceConstants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.URLEncoder
 
-class WaterSourceService {
+object WaterSourceService {
 
     suspend fun getWaterSourcesNearby(
         lat: Double,
@@ -16,7 +18,9 @@ class WaterSourceService {
         radiusMetres: Int = WaterSourceConstants.defaultRadius
     ): Result<List<WaterSource>> {
         val query = buildOverpassQuery(lat, lon, radiusMetres)
-        val encoded = URLEncoder.encode(query, "UTF-8")
+        val encoded = withContext(Dispatchers.IO) {
+            URLEncoder.encode(query, "UTF-8")
+        }
 
         return KtorClient.get("${WaterSourceConstants.apiUrl}overpassUrl?data=$encoded")
             .mapCatching { json -> parseWaterSources(json) }

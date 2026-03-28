@@ -9,9 +9,8 @@ import aubg.hack.ailyak.https.KtorClient
 import org.json.JSONObject
 
 object CoverageCellService {
-    suspend fun fetchCellTowersInArea(cell: CoverageCellParams):Result<CoverageCellsList>{
-
-        return KtorClient.get(CellConstants.apiUrl+"cell/getInArea",
+    suspend fun fetchCellTowersInArea(cell: CoverageCellParams): CoverageCellsList {
+        val result = KtorClient.get(CellConstants.apiUrl+"cell/getInArea",
             params = mapOf(
                 "apiKey"    to BuildConfig.OPENCELLID_API_KEY,
                 "latmin"   to cell.latituteMin.toString(),
@@ -25,9 +24,13 @@ object CoverageCellService {
             .mapCatching { json ->
             parseCells(json)
         }
+
+        return result.getOrElse {
+            throw Exception("Could not retrieve cell coverage data")
+        }
     }
 
-    suspend fun parseCells(json:String):CoverageCellsList{
+    suspend fun parseCells(json:String): CoverageCellsList {
         val cellsResult = JSONObject(json)
         val cells = cellsResult.getJSONArray("cells")
         return CoverageCellsList(
