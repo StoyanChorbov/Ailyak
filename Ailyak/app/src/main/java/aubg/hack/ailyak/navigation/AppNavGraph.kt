@@ -5,8 +5,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Map
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,6 +23,7 @@ import aubg.hack.ailyak.ui.screens.MapScreen
 import aubg.hack.ailyak.ui.screens.PlantIndexScreen
 import aubg.hack.ailyak.ui.screens.SettingsScreen
 import aubg.hack.ailyak.ui.screens.WaterIndexScreen
+import aubg.hack.ailyak.ui.survivalguide.screen.GuideListScreen
 
 import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.Home
@@ -69,6 +72,13 @@ sealed class Screen(
         unselectedIcon = Icons.Outlined.Settings
     )
 
+    object Guide : Screen(
+        route = "guide",
+        label = "Guide",
+        selectedIcon = Icons.Filled.Info,
+        unselectedIcon = Icons.Outlined.Info
+    )
+
     object Shelters : Screen(
         route = "shelters",
         label = "Shelters",
@@ -81,6 +91,7 @@ sealed class Screen(
 fun AppNavGraph() {
     val navController = rememberNavController()
     val items = listOf(
+        Screen.Guide,
         Screen.Plants,
         Screen.Water,
         Screen.Map,
@@ -154,6 +165,7 @@ fun AppNavGraph() {
             composable(Screen.Water.route) { WaterIndexScreen() }
             composable(Screen.Animals.route) { AnimalIndexScreen() }
             composable(Screen.Settings.route) { SettingsScreen() }
+            composable(Screen.Guide.route) { GuideListScreen() }
             composable(Screen.Shelters.route) { ShelterIndexScreen() }
         }
     }
