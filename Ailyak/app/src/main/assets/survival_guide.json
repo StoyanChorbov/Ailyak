@@ -1,0 +1,7 @@
+[
+  {"id":1,"title":"How to Make Fire","category":"fire","content":"Use the bow drill method: find a dry softwood fireboard and spindle. Apply downward pressure and friction to generate an ember, then transfer to a tinder bundle and blow gently."},
+  {"id":2,"title":"Building a Temporary Shelter","category":"shelter","content":"Find a natural windbreak. Lean branches against a fallen log at 45 degrees. Layer smaller sticks and leaves on top for insulation. Keep it small to retain body heat."},
+  {"id":3,"title":"Filtering Water","category":"water","content":"Layer a container with grass, fine sand, crushed charcoal, and small rocks. Pour water through slowly. Always boil the filtered water before drinking if possible."},
+  {"id":4,"title":"Navigation Without GPS","category":"navigation","content":"Use the shadow-tip method during daytime. At night follow the North Star (Polaris). Moss tends to grow thicker on the north side of trees in the northern hemisphere."},
+  {"id":5,"title":"Basic First Aid in the Wild","category":"first_aid","content":"Clean wounds with purified water. Use plantain leaves as a poultice for minor cuts. Immobilize suspected fractures with a splint made from straight sticks and cloth."}
+]
