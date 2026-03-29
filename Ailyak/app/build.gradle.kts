@@ -1,110 +1,64 @@
-import java.util.Properties
-
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("org.jetbrains.kotlin.plugin.serialization")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
-val localProperties = Properties().apply {
-    load(rootProject.file("local.properties").inputStream())
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
-}
-
-configurations.all {
-    exclude(group = "com.google.guava", module = "listenablefuture")
-    exclude(group = "com.google.guava", module = "guava-jdk5")
-
-    resolutionStrategy {
-        force("com.google.guava:guava:32.1.3-android")
-    }
-}
 android {
     namespace = "aubg.hack.ailyak"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
-
+    compileSdk = 36
     defaultConfig {
         applicationId = "aubg.hack.ailyak"
-        minSdk = 31
-        targetSdk = 36
+        minSdk = 26
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField(
-            "String",
-            "OPENCELLID_API_KEY",
-            "\"${localProperties["OPENCELLID_API_KEY"]}\""
-        )
-        buildConfigField ("String", "PERENUAL_API_KEY", "\"${localProperties["PERENUAL_API_KEY"]}\"")
     }
-
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
+        release { isMinifyEnabled = false }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
+    kotlinOptions { jvmTarget = "17" }
     buildFeatures {
         compose = true
-        buildConfig=true
+        buildConfig = true
     }
-
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.compose.material.icons.core)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.maps.compose)
-    implementation(libs.play.services.location)
-    implementation(libs.android.ndk27)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.navigation.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.hilt.android)
-    implementation(libs.maps.compose.ndk27)
-    implementation (libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.compiler)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.transport.runtime)
-    ksp(libs.androidx.room.compiler)
-    testImplementation(libs.junit)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.datastore.preferences)
     implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.kotlinx.coroutines.play.services)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
+    implementation(libs.coil.compose)
+    implementation(libs.osmdroid)
+    implementation(libs.play.services.location)
+    implementation(libs.coroutines.android)
+    implementation(libs.workmanager.ktx)
+    implementation(libs.mapbox.maps)
+    implementation(libs.mapbox.compose)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.material)
+    implementation(libs.androidx.material.icons.extended)
 
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import aubg.hack.ailyak.viewmodel.MapViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices
@@ -33,7 +34,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun MapScreen(viewModel: MapViewModelOld = hiltViewModel()) {
+fun MapScreen(viewModel: MapViewModel = hiltViewModel()) {
     val locationPermissions = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -54,7 +55,7 @@ fun MapScreen(viewModel: MapViewModelOld = hiltViewModel()) {
 
 @SuppressLint("MissingPermission")
 @Composable
-private fun MapContent(viewModel: MapViewModelOld) {
+private fun MapContent(viewModel: MapViewModel) {
     val context = LocalContext.current
     val isConnected by viewModel.isConnected.collectAsState()
     val pathPoints by viewModel.pathPoints.collectAsState()
@@ -306,12 +307,14 @@ private fun LayerToggleMenu(
                         checked = showCellularHeatmap,
                         onToggle = onToggleCellular
                     )
+                    Spacer(Modifier.height(16.dp))
                     LayerToggleRow(
                         emoji = "💧",
                         label = "Water",
                         checked = showWaterSources,
                         onToggle = onToggleWater
                     )
+                    Spacer(Modifier.height(16.dp))
                     LayerToggleRow(
                         emoji = "⛺",
                         label = "Shelters",
@@ -373,9 +376,9 @@ private fun PermissionRequestScreen(
         Spacer(Modifier.height(8.dp))
         Text(
             text = if (shouldShowRationale)
-                "Reginola needs your location to track your path and show nearby plants, water sources, and shelters."
+                "Wildguard needs your location to track your path and show nearby plants, water sources, and shelters."
             else
-                "Please grant location access so Reginola can keep you safe in the wild.",
+                "Please grant location access so Wildguard can keep you safe in the wild.",
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant

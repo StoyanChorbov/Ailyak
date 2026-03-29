@@ -1,36 +1,20 @@
 package aubg.hack.ailyak.viewmodel
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import aubg.hack.ailyak.location.LocationTracker
-import com.example.reginola.core.common.Result
-import com.example.reginola.core.database.PathPointDao
-import com.example.reginola.core.database.entities.PathPointEntity
-import com.example.reginola.core.network.NetworkMonitor
-import com.example.reginola.features.cellular.data.CellTowerRepository
-import com.example.reginola.features.cellular.data.CellTowerUi
-import com.example.reginola.features.settings.data.UserPreferencesDataStore
-import com.example.reginola.features.shelters.data.ShelterRepository
-import com.example.reginola.features.shelters.data.ShelterUiItem
-import com.example.reginola.features.water.data.WaterRepository
-import com.example.reginola.features.water.data.WaterSourceUi
-import com.mapbox.geojson.LineString
-import com.mapbox.geojson.Point
-import com.mapbox.maps.MapboxMap
-import com.mapbox.maps.extension.style.layers.addLayer
-import com.mapbox.maps.extension.style.layers.generated.lineLayer
-import com.mapbox.maps.extension.style.layers.properties.generated.LineCap
-import com.mapbox.maps.extension.style.layers.properties.generated.LineJoin
-import com.mapbox.maps.extension.style.sources.addSource
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource
-import com.mapbox.maps.extension.style.sources.generated.geoJsonSource
-import com.mapbox.maps.extension.style.sources.getSource
-import com.mapbox.maps.extension.style.sources.getSourceAs
+import aubg.hack.ailyak.data.model.Result
+import aubg.hack.ailyak.db.dao.PathPointDao
+import aubg.hack.ailyak.db.model.PathPointEntity
+import aubg.hack.ailyak.https.NetworkMonitor
+import aubg.hack.ailyak.ui.survivalguide.data.CellTowerRepository
+import aubg.hack.ailyak.data.model.CellTowerUi
+import aubg.hack.ailyak.data.model.UserPreferencesDataStore
+import aubg.hack.ailyak.ui.survivalguide.data.ShelterRepository
+import aubg.hack.ailyak.data.model.ShelterUiItem
+import aubg.hack.ailyak.ui.survivalguide.data.WaterRepository
+import aubg.hack.ailyak.data.model.WaterSourceUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -134,157 +118,4 @@ class MapViewModel @Inject constructor(
             }
         }
     }
-
-//    private var mapboxMap: MapboxMap? = null
-//    private var locationJob: Job? = null
-//
-//    // Keeps the full location history
-//    private val locationHistory = mutableListOf<Point>()
-//
-//    private val _currentLocation = MutableStateFlow<Location?>(null)
-//    val currentLocation: StateFlow<Location?> = _currentLocation
-//
-//    fun onMapReady(map: MapboxMap) {
-//        mapboxMap = map
-//    }
-//
-//    // ─────────────────────────────────────────
-//    // LOCATION TRACKING
-//    // ─────────────────────────────────────────
-//
-//    fun startLocationTracking(context: Context, intervalMs: Long = 3000L) {
-//        locationJob?.cancel()
-//        val tracker = LocationTracker(context)
-//
-//        locationJob = viewModelScope.launch {
-//            tracker.locationUpdates(intervalMs).collect { location ->
-//                _currentLocation.value = location
-//
-//                val newPoint = Point.fromLngLat(location.longitude, location.latitude)
-//                locationHistory.add(newPoint)
-//
-//                // Draw line between last two positions
-//                if (locationHistory.size >= 2) {
-//                    val last = locationHistory.takeLast(2)
-//                    drawLocationLine(last)
-//                }
-//            }
-//        }
-//    }
-//
-//    fun stopLocationTracking() {
-//        locationJob?.cancel()
-//        locationJob = null
-//    }
-//
-//    // ─────────────────────────────────────────
-//    // LINE BETWEEN LAST TWO LOCATIONS
-//    // ─────────────────────────────────────────
-//    private fun drawLocationLine(points: List<Point>) {
-//        viewModelScope.launch(Dispatchers.Main) {
-//            mapboxMap?.getStyle { style ->
-//                val sourceId = "location-line-source"
-//                val layerId = "location-line-layer"
-//
-//                val existingSource = style.getSource(sourceId)
-//
-//                if (existingSource == null) {
-//                    style.addSource(geoJsonSource(sourceId) {
-//                        geometry(LineString.fromLngLats(points))
-//                    })
-//
-//                    style.addLayer(lineLayer(layerId, sourceId) {
-//                        lineColor("#2196F3")
-//                        lineWidth(4.0)
-//                        lineCap(LineCap.ROUND)
-//                        lineJoin(LineJoin.ROUND)
-//                    })
-//                } else {
-//                    val geoJsonSource = style.getSourceAs<GeoJsonSource>(sourceId)
-//                    geoJsonSource?.geometry(LineString.fromLngLats(points))
-//                }
-//            }
-//        }
-//    }
-////    private fun drawLocationLine(points: List<Point>) {
-////        viewModelScope.launch(Dispatchers.Main) {
-////            mapboxMap?.loadStyle(Style.MAPBOX_STREETS) { style ->
-//////                clearLayer("location-line-layer", "location-line-source", style)
-//////
-//////                style.addSource(geoJsonSource("location-line-source") {
-//////                    geometry(LineString.fromLngLats(points))
-//////                })
-//////                style.addLayer(lineLayer("location-line-layer", "location-line-source") {
-//////                    lineColor("#2196F3")     // blue
-//////                    lineWidth(4.0)
-//////                    lineCap(LineCap.ROUND)
-//////                    lineJoin(LineJoin.ROUND)
-//////                })
-////                val sourceId = "location-line-source"
-////                val layerId = "location-line-layer"
-////
-////                val existingSource = style.getSource(sourceId)
-////
-////                if (existingSource == null) {
-////                    style.addSource(geoJsonSource(sourceId) {
-////                        geometry(LineString.fromLngLats(points))
-////                    })
-////
-////                    style.addLayer(lineLayer(layerId, sourceId) {
-////                        lineColor("#2196F3")
-////                        lineWidth(4.0)
-////                        lineCap(LineCap.ROUND)
-////                        lineJoin(LineJoin.ROUND)
-////                    })
-////                } else {
-////                    val geoJsonSource = style.getSourceAs<GeoJsonSource>(sourceId)
-////                    geoJsonSource?.geometry(LineString.fromLngLats(points))
-////                }
-////            }
-////        }
-////    }
-//
-//    // Draw the FULL traveled path instead of just last two points
-//    fun drawFullPath() {
-//        if (locationHistory.size < 2) return
-//        viewModelScope.launch(Dispatchers.Main) {
-//            mapboxMap?.getStyle { style ->
-//                clearLayer("location-line-layer", "location-line-source", style)
-//                style.addSource(geoJsonSource("location-line-source") {
-//                    geometry(LineString.fromLngLats(locationHistory))
-//                })
-//                style.addLayer(lineLayer("location-line-layer", "location-line-source") {
-//                    lineColor("#2196F3")
-//                    lineWidth(4.0)
-//                    lineCap(LineCap.ROUND)
-//                    lineJoin(LineJoin.ROUND)
-//                })
-//            }
-//        }
-//    }
-//
-//    fun clearLocationPath() = removeOverlay("location-line-layer", "location-line-source")
-//    fun clearLocationHistory() { locationHistory.clear() }
-//
-//    // ─────────────────────────────────────────
-//    // ... rest of your existing drawLine,
-//    //     drawHeatmap, clearAll etc.
-//    // ─────────────────────────────────────────
-//
-//    private fun removeOverlay(layerId: String, sourceId: String?) {
-//        viewModelScope.launch(Dispatchers.Main) {
-//            mapboxMap?.getStyle { style -> clearLayer(layerId, sourceId, style) }
-//        }
-//    }
-//
-//    private fun clearLayer(layerId: String, sourceId: String?, style: com.mapbox.maps.Style) {
-//        if (style.styleLayerExists(layerId)) style.removeStyleLayer(layerId)
-//        if (sourceId != null && style.styleSourceExists(sourceId)) style.removeStyleSource(sourceId)
-//    }
-//
-//    override fun onCleared() {
-//        super.onCleared()
-//        stopLocationTracking()
-//        mapboxMap = null
-//    }
 }
