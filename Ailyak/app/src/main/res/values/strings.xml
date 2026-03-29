@@ -130,13 +130,73 @@
     <string name="shelter_item_a_frame_tarp_step_2">Drape your emergency blanket or tarp evenly over the line.</string>
     <string name="shelter_item_a_frame_tarp_step_3">Pull the four corners out tightly to form a triangle and peg them into the ground using sharpened sticks or heavy rocks.</string>
 
-    <string name="section_first_aid_title">First Aid</string>
-    <string name="section_first_aid_body">Address major bleeding first, clean wounds, and monitor for shock while seeking help.</string>
-    <string name="section_first_aid_photo_one">First aid photo 1</string>
-    <string name="section_first_aid_photo_two">First aid photo 2</string>
+    <string name="section_first_aid_title">First Aid &amp; Hazards</string>
+    <string name="section_first_aid_body">Critical first aid and field hazard response basics.</string>
+    <string name="section_first_aid_photo_one">First aid and hazards image placeholder 1</string>
+    <string name="section_first_aid_photo_two">First aid and hazards image placeholder 2</string>
 
-    <string name="section_signaling_title">Signaling</string>
-    <string name="section_signaling_body">Use clear visual or sound signals in open areas and repeat patterns to attract attention.</string>
-    <string name="section_signaling_photo_one">Signaling photo 1</string>
-    <string name="section_signaling_photo_two">Signaling photo 2</string>
+    <string name="first_aid_item_stopping_bleeding_title">Stopping Severe Bleeding</string>
+    <string name="first_aid_item_stopping_bleeding_image_label">Image placeholder: Hands applying heavy, direct pressure to a wound using a thick clean cloth.</string>
+    <string name="first_aid_item_stopping_bleeding_step_1">Apply immediate, firm, and continuous direct pressure to the wound using a clean cloth or shirt.</string>
+    <string name="first_aid_item_stopping_bleeding_step_2">If the bleeding is on a limb, elevate the limb above the level of the heart while maintaining pressure.</string>
+    <string name="first_aid_item_stopping_bleeding_step_3">If blood is spurting (arterial bleed) and pressure fails, apply a tourniquet 2-3 inches above the wound. Twist until bleeding stops and note the exact time it was applied.</string>
+
+    <string name="first_aid_item_makeshift_splints_title">Makeshift Splints for Sprains</string>
+    <string name="first_aid_item_makeshift_splints_image_label">Image placeholder: Forearm stabilized by two straight branches tied securely with fabric strips.</string>
+    <string name="first_aid_item_makeshift_splints_step_1">Do not force a dislocated joint back into place. Immobilize the injury exactly in the position you found it.</string>
+    <string name="first_aid_item_makeshift_splints_step_2">Find two rigid objects (straight sticks, rolled-up foam pads, or tent poles) and place them on either side of the injured limb.</string>
+    <string name="first_aid_item_makeshift_splints_step_3">Tie the rigid objects securely using strips of cloth, shoelaces, or vines. Tie the knots above and below the injured joint, never directly over it.</string>
+
+    <string name="first_aid_item_hypothermia_title">Treating Hypothermia</string>
+    <string name="first_aid_item_hypothermia_image_label">Image placeholder: Shivering person wrapped in an emergency blanket over a sleeping bag on a foam pad.</string>
+    <string name="first_aid_item_hypothermia_step_1">Get the person out of the wind and rain. Immediately remove any wet clothing; wet clothes draw heat away from the body 25 times faster than air.</string>
+    <string name="first_aid_item_hypothermia_step_2">Put dry clothes on the person and insulate them from the cold ground using a sleeping pad or pine boughs.</string>
+    <string name="first_aid_item_hypothermia_step_3">Apply gentle heat to the core. Place warm (not boiling) water bottles wrapped in cloth on their neck, armpits, and groin. Do not rub their skin or put them too close to a blazing fire.</string>
+
+    <string name="first_aid_item_snake_bites_title">Managing Snake Bites</string>
+    <string name="first_aid_item_snake_bites_image_label">Image placeholder: Calm person with a bitten leg resting below chest level.</string>
+    <string name="first_aid_item_snake_bites_step_1">Move out of striking distance immediately. Keep the victim completely still and calm to slow their heart rate and the spread of venom.</string>
+    <string name="first_aid_item_snake_bites_step_2">Position the bitten area lower than the level of the heart. Remove any rings, watches, or tight clothing around the bite area, as it will swell rapidly.</string>
+    <string name="first_aid_item_snake_bites_step_3">Wash the bite gently with soap and water. DO NOT cut the wound, attempt to suck the venom out, or apply a tourniquet. Seek medical evacuation immediately.</string>
+
+    <string name="first_aid_item_burns_title">Treating Burns</string>
+    <string name="first_aid_item_burns_image_label">Image placeholder: Burned hand held under a gentle stream of cool clean water.</string>
+    <string name="first_aid_item_burns_step_1">Immediately run cool (not ice-cold) water over the burn for 10 to 15 minutes to stop the skin from continuing to cook.</string>
+    <string name="first_aid_item_burns_step_2">Remove any jewelry or tight clothing near the burn area before swelling begins. Do not attempt to remove clothing that is stuck to the burn.</string>
+    <string name="first_aid_item_burns_step_3">Cover the burn loosely with a clean, dry cloth or sterile gauze. Do not apply ointments, butter, or grease, and never pop blisters.</string>
+
+    <string name="section_signaling_title">Signaling &amp; Rescue</string>
+    <string name="section_signaling_body">Field signaling and rescue visibility basics.</string>
+    <string name="section_signaling_photo_one">Signaling and rescue image placeholder 1</string>
+    <string name="section_signaling_photo_two">Signaling and rescue image placeholder 2</string>
+
+    <string name="signaling_item_rule_of_three_title">The Universal Rule of Three (SOS)</string>
+    <string name="signaling_item_rule_of_three_image_label">Image placeholder: Whistle with 3 short, 3 long, 3 short sound bursts.</string>
+    <string name="signaling_item_rule_of_three_step_1">In wilderness survival, any signal repeated three times in a row is the universal distress call (e.g., three whistle blasts, three gunshots, or three fires in a triangle).</string>
+    <string name="signaling_item_rule_of_three_step_2">The official SOS in Morse code is 3 short, 3 long, 3 short.</string>
+    <string name="signaling_item_rule_of_three_step_3">If you are using a whistle, blow three loud, distinct blasts, wait a few minutes to listen for a reply, and repeat.</string>
+
+    <string name="signaling_item_signal_mirror_title">Using a Signal Mirror</string>
+    <string name="signaling_item_signal_mirror_image_label">Image placeholder: Person aiming reflected sunlight through a finger V toward a target.</string>
+    <string name="signaling_item_signal_mirror_step_1">You can use a dedicated signal mirror, a phone screen, or a metallic compass back.</string>
+    <string name="signaling_item_signal_mirror_step_2">Hold your non-mirror hand out at arms length and make a V with your fingers, framing your target (like a search plane or distant road).</string>
+    <string name="signaling_item_signal_mirror_step_3">Hold the mirror near your eye and bounce the sunlight off the mirror, through your fingers, and onto the target. Sweep the beam slowly back and forth.</string>
+
+    <string name="signaling_item_ground_markers_title">Ground-to-Air Markers</string>
+    <string name="signaling_item_ground_markers_image_label">Image placeholder: Large high-contrast X made from rocks and branches in an open area.</string>
+    <string name="signaling_item_ground_markers_step_1">Find a large clearing that is visible from the sky. Do not build signals under a tree canopy.</string>
+    <string name="signaling_item_ground_markers_step_2">Use materials that heavily contrast with the ground. Use dark rocks or logs on snow/sand, or bright clothing/toilet paper on dark grass.</string>
+    <string name="signaling_item_ground_markers_step_3">Build a massive "X" (meaning "Unable to proceed/need help") or "V" (meaning "Require Assistance"). Make the letters at least 10 feet long so they can be seen by fast-moving aircraft.</string>
+
+    <string name="signaling_item_smoky_day_fire_title">The Smoky Day Fire</string>
+    <string name="signaling_item_smoky_day_fire_image_label">Image placeholder: Hot campfire with green vegetation producing thick white smoke.</string>
+    <string name="signaling_item_smoky_day_fire_step_1">Build a very hot, sustainable fire using dry wood in a clear area (like a ridge or a clearing).</string>
+    <string name="signaling_item_smoky_day_fire_step_2">Gather a large amount of "green" (living) vegetation, such as fresh pine boughs, damp leaves, or tall green grass.</string>
+    <string name="signaling_item_smoky_day_fire_step_3">Once you hear an aircraft, throw the green vegetation onto the hot coals. It will not burn efficiently, but it will instantly produce a massive column of thick white smoke visible for miles.</string>
+
+    <string name="signaling_item_high_ground_movement_title">High Ground &amp; Movement</string>
+    <string name="signaling_item_high_ground_movement_image_label">Image placeholder: Bright jacket tied to a long stick and waved above the tree line.</string>
+    <string name="signaling_item_high_ground_movement_step_1">Search and rescue teams are trained to look for movement and unnatural colors.</string>
+    <string name="signaling_item_high_ground_movement_step_2">If you hear a helicopter or see rescuers, do not just stand still. Wave both arms above your head continuously.</string>
+    <string name="signaling_item_high_ground_movement_step_3">Tie your brightest piece of clothing (orange, red, or bright blue) to a long stick and wave it rapidly like a flag. Movement catches the human eye much faster than a static shape.</string>
 </resources>

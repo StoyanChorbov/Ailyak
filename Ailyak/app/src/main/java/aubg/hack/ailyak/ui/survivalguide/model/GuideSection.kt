@@ -8,6 +8,7 @@ data class GuideSection(
     @param:StringRes val bodyRes: Int,
     @param:StringRes val photoOneLabelRes: Int,
     @param:StringRes val photoTwoLabelRes: Int,
+    val imageNamePrefix: String? = null,
     val icon: ImageVector? = null,
     val items: List<GuideItem> = emptyList()
 )
