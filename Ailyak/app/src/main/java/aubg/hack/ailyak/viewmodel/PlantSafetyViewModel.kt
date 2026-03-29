@@ -50,5 +50,4 @@ class PlantSafetyViewModel : ViewModel() {
                 PlantSafetyState.Error(it.message ?: "Unknown error")
             }
         }
-    }
-}
+    }}
