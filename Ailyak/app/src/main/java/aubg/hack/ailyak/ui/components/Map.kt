@@ -3,7 +3,6 @@ package aubg.hack.ailyak.ui.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import aubg.hack.ailyak.viewmodel.MapViewModel
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.extension.compose.MapEffect
@@ -17,7 +16,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 @Composable
 fun SurvivalMap(
     modifier: Modifier = Modifier,
-    viewModel: MapViewModel = viewModel()
+    viewModel: MapViewModelOld = viewModel()
 ) {
     val mapViewportState = rememberMapViewportState()
 
