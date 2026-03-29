@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import aubg.hack.ailyak.ui.components.EmergencyMapOverlay
 import aubg.hack.ailyak.viewmodel.MapViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -317,6 +318,12 @@ private fun MapContent(viewModel: MapViewModel) {
                 Text("⬇")
             }
         }
+
+        EmergencyMapOverlay(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 16.dp, bottom = 72.dp)
+        )
     }
 }
 
