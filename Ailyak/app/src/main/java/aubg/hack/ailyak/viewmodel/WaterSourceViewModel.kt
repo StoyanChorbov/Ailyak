@@ -17,9 +17,6 @@ sealed class WaterSourceState {
 }
 
 class WaterSourceViewModel : ViewModel() {
-
-    private val waterSourceService = WaterSourceService()
-
     private val _state = MutableStateFlow<WaterSourceState>(WaterSourceState.Idle)
     val state: StateFlow<WaterSourceState> = _state
 
@@ -28,7 +25,7 @@ class WaterSourceViewModel : ViewModel() {
             _state.value = WaterSourceState.Loading
             _state.value = runCatching {
                 WaterSourceState.Success(
-                    waterSourceService.getWaterSourcesNearby(lat, lon, radiusMetres).getOrThrow()
+                    WaterSourceService.getWaterSourcesNearby(lat, lon, radiusMetres)
                 )
             }.getOrElse {
                 WaterSourceState.Error(it.message ?: "Unknown error")
@@ -41,7 +38,7 @@ class WaterSourceViewModel : ViewModel() {
             _state.value = WaterSourceState.Loading
             _state.value = runCatching {
                 WaterSourceState.Success(
-                    waterSourceService.getDrinkingWaterNearby(lat, lon, radiusMetres).getOrThrow()
+                    WaterSourceService.getDrinkingWaterNearby(lat, lon, radiusMetres)
                 )
             }.getOrElse {
                 WaterSourceState.Error(it.message ?: "Unknown error")
@@ -54,7 +51,7 @@ class WaterSourceViewModel : ViewModel() {
             _state.value = WaterSourceState.Loading
             _state.value = runCatching {
                 WaterSourceState.Success(
-                    waterSourceService.getSpringsNearby(lat, lon, radiusMetres).getOrThrow()
+                    WaterSourceService.getSpringsNearby(lat, lon, radiusMetres)
                 )
             }.getOrElse {
                 WaterSourceState.Error(it.message ?: "Unknown error")

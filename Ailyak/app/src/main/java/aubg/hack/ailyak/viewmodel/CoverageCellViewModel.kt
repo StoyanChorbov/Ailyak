@@ -45,7 +45,7 @@ class CoverageCellViewModel(context: Context) : ViewModel() {
         viewModelScope.launch {
             _state.value = CoverageCellState.Loading
             _state.value = runCatching {
-                val result = CoverageCellService.fetchCellTowersInArea(params).getOrThrow()
+                val result = CoverageCellService.fetchCellTowersInArea(params)
                 CoverageCellState.Success(
                     cells = result.cells,
                     count = result.cellsCount

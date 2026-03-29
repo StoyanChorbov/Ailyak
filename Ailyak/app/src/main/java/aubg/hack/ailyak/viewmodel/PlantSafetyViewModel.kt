@@ -19,10 +19,6 @@ sealed class PlantSafetyState {
 
 class PlantSafetyViewModel : ViewModel() {
 
-    private val gbifService        = GbifService()
-    private val perenualService    = PerenualService()
-    private val plantSafetyService = PlantSafetyService(gbifService, perenualService)
-
     private val _state = MutableStateFlow<PlantSafetyState>(PlantSafetyState.Idle)
     val state: StateFlow<PlantSafetyState> = _state
 
@@ -31,7 +27,7 @@ class PlantSafetyViewModel : ViewModel() {
             _state.value = PlantSafetyState.Loading
             _state.value = runCatching {
                 PlantSafetyState.Success(
-                    plantSafetyService.getSafePlantsNearby(latitude, longitude, radiusKm)
+                    PlantSafetyService.getSafePlantsNearby(latitude, longitude, radiusKm)
                 )
             }.getOrElse {
                 PlantSafetyState.Error(it.message ?: "Unknown error")
@@ -44,7 +40,7 @@ class PlantSafetyViewModel : ViewModel() {
             _state.value = PlantSafetyState.Loading
             _state.value = runCatching {
                 PlantSafetyState.Success(
-                    plantSafetyService.getPlantSafetyInfoNearby(latitude, longitude, radiusKm)
+                    PlantSafetyService.getPlantSafetyInfoNearby(latitude, longitude, radiusKm)
                 )
             }.getOrElse {
                 PlantSafetyState.Error(it.message ?: "Unknown error")

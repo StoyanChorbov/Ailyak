@@ -6,7 +6,7 @@ import aubg.hack.ailyak.data.model.PlantDetails
 import org.json.JSONObject
 import aubg.hack.ailyak.PerenualConstants
 
-class PerenualService() {
+object PerenualService {
 
     suspend fun getPlantSafety(scientificName: String): Result<PlantDetails?> {
         return KtorClient.get(

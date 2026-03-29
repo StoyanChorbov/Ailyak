@@ -7,7 +7,7 @@ import aubg.hack.ailyak.https.KtorClient
 import org.json.JSONObject
 import kotlin.math.*
 
-class GbifService {
+object GbifService {
 
     // ~111 km per degree of latitude
     private fun boundingBox(lat: Double, lng: Double, radiusKm: Double): Map<String, String> {
