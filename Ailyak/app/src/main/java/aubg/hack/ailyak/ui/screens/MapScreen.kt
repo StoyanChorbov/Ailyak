@@ -32,10 +32,13 @@ import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
+import kotlin.math.PI
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
+import kotlin.math.min
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -72,6 +75,9 @@ private fun MapContent(viewModel: MapViewModel) {
     val shelters by viewModel.shelters.collectAsState()
     val cellTowers by viewModel.cellTowers.collectAsState()   // ← must be here
     val mapStyleUrl by viewModel.mapStyleUrl.collectAsState()
+    val towerRadiusOverlays = remember(cellTowers) {
+        buildNonOverlappingTowerRadiusOverlays(cellTowers)
+    }
 
     var selectedWaterId by remember { mutableStateOf<Long?>(null) }
     val selectedWater = waterSources.firstOrNull { it.id == selectedWaterId }
@@ -171,24 +177,25 @@ private fun MapContent(viewModel: MapViewModel) {
             }
 
             if (showCellularHeatmap) {
+                towerRadiusOverlays.forEach { overlay ->
+                    key("tower_overlay_${overlay.key}") {
+                        PolygonAnnotation(
+                            points = listOf(
+                                createCirclePolygonPoints(
+                                    centerLat = overlay.lat,
+                                    centerLng = overlay.lng,
+                                    radiusMeters = overlay.radiusMeters,
+                                    segments = overlay.segments
+                                )
+                            )
+                        ) {
+                            fillColor = Color(overlay.color).copy(alpha = 0.16f)
+                        }
+                    }
+                }
+
                 cellTowers.forEach { tower ->
                     key("${tower.id}_${tower.lat}_${tower.lng}") {
-                        tower.rangeMeters
-                            ?.takeIf { it > 0 }
-                            ?.let { rangeMeters ->
-                                PolygonAnnotation(
-                                    points = listOf(
-                                        createCirclePolygonPoints(
-                                            centerLat = tower.lat,
-                                            centerLng = tower.lng,
-                                            radiusMeters = rangeMeters.toDouble()
-                                        )
-                                    )
-                                ) {
-                                    fillColor = Color(tower.radio.color()).copy(alpha = 0.16f)
-                                }
-                            }
-
                         CircleAnnotation(
                             point = Point.fromLngLat(tower.lng, tower.lat)
                         ) {
@@ -278,6 +285,75 @@ private fun MapContent(viewModel: MapViewModel) {
     }
 }
 
+private data class TowerRadiusOverlay(
+    val key: String,
+    val lat: Double,
+    val lng: Double,
+    val radiusMeters: Double,
+    val color: Long,
+    val segments: Int
+)
+
+private fun buildNonOverlappingTowerRadiusOverlays(
+    towers: List<aubg.hack.ailyak.data.model.CellTowerUi>,
+    maxOverlays: Int = 24
+): List<TowerRadiusOverlay> {
+    val candidates = towers
+        .asSequence()
+        .mapNotNull { tower ->
+            val radius = tower.rangeMeters?.toDouble()?.takeIf { it > 0.0 } ?: return@mapNotNull null
+            val clampedRadius = radius.coerceIn(120.0, 2_500.0)
+            val segments = when {
+                clampedRadius >= 1_800.0 -> 30
+                clampedRadius >= 1_000.0 -> 24
+                else -> 18
+            }
+            TowerRadiusOverlay(
+                key = "${tower.id}_${tower.lat}_${tower.lng}",
+                lat = tower.lat,
+                lng = tower.lng,
+                radiusMeters = clampedRadius,
+                color = tower.radio.color(),
+                segments = segments
+            )
+        }
+        .sortedByDescending { it.radiusMeters }
+        .toList()
+
+    val selected = mutableListOf<TowerRadiusOverlay>()
+    for (candidate in candidates) {
+        val overlapsExisting = selected.any { existing ->
+            val centerDistance = approximateDistanceMeters(
+                candidate.lat,
+                candidate.lng,
+                existing.lat,
+                existing.lng
+            )
+            centerDistance < min(candidate.radiusMeters, existing.radiusMeters) * 0.6
+        }
+        if (!overlapsExisting) {
+            selected += candidate
+            if (selected.size >= maxOverlays) break
+        }
+    }
+
+    return selected
+}
+
+private fun approximateDistanceMeters(
+    lat1: Double,
+    lng1: Double,
+    lat2: Double,
+    lng2: Double
+): Double {
+    val metersPerDegreeLat = 111_320.0
+    val avgLatRad = Math.toRadians((lat1 + lat2) / 2.0)
+    val metersPerDegreeLng = metersPerDegreeLat * cos(avgLatRad)
+    val dx = (lng2 - lng1) * metersPerDegreeLng
+    val dy = (lat2 - lat1) * metersPerDegreeLat
+    return sqrt(dx * dx + dy * dy)
+}
+
 private fun createCirclePolygonPoints(
     centerLat: Double,
     centerLng: Double,
@@ -290,7 +366,7 @@ private fun createCirclePolygonPoints(
     val lngRad = Math.toRadians(centerLng)
 
     val ring = (0..segments).map { step ->
-        val bearing = (2.0 * Math.PI * step) / segments
+        val bearing = (2.0 * PI * step) / segments
         val pointLat = asin(
             sin(latRad) * cos(angularDistance) +
                 cos(latRad) * sin(angularDistance) * cos(bearing)
