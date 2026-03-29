@@ -25,7 +25,6 @@ import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
-import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
@@ -251,23 +250,16 @@ private fun MapContent(viewModel: MapViewModel) {
                     }
                 }
             }
-        }
 
-        selectedPoint?.let { point ->
+            selectedPoint?.let { point ->
 
-            // Center marker
-            CircleAnnotation(point = point) {
-                circleColor = Color.Red
-                circleRadius = 10.0
-                circleStrokeColor = Color.White
-                circleStrokeWidth = 2.0
-            }
-
-            // Radius visualization (rough circle using opacity)
-            CircleAnnotation(point = point) {
-                circleColor = Color.Red
-                circleRadius = downloadRadiusMeters / 5.0   // visual scaling
-                circleOpacity = 0.2
+                // Center marker
+                CircleAnnotation(point = point) {
+                    circleColor = Color.Red
+                    circleRadius = 10.0
+                    circleStrokeColor = Color.White
+                    circleStrokeWidth = 2.0
+                }
             }
         }
 
@@ -307,24 +299,23 @@ private fun MapContent(viewModel: MapViewModel) {
                 )
             }
         }
-    }
-
-    if (selectedPoint != null) {
-        FloatingActionButton(
-            onClick = {
-                selectedPoint?.let { point ->
-                    viewModel.downloadDataForArea(
-                        lat = point.latitude(),
-                        lon = point.longitude(),
-                        radiusMeters = downloadRadiusMeters
-                    )
-                }
-            },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 90.dp)
-        ) {
-            Text("⬇")
+        if (selectedPoint != null) {
+            FloatingActionButton(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 90.dp),
+                onClick = {
+                    selectedPoint?.let { point ->
+                        viewModel.downloadDataForArea(
+                            lat = point.latitude(),
+                            lon = point.longitude(),
+                            radiusMeters = downloadRadiusMeters
+                        )
+                    }
+                },
+            ) {
+                Text("⬇")
+            }
         }
     }
 }
