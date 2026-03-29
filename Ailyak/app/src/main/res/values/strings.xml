@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ailyak</string>
+    <string name="app_name">WildGuard</string>
     <string name="hamburger_menu_content_description">Open menu</string>
     <string name="menu_map_layers_title">Map Layers</string>
     <string name="menu_toggle_plants_food_sources">Plants, Food sources</string>
