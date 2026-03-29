@@ -4,7 +4,7 @@ import retrofit2.http.Query
 
 import aubg.hack.ailyak.data.model.*
 
-interface CellTowerApiService {
+interface CoverageCellService {
     @GET("cell/getInArea")
     suspend fun getCellsInArea(
         @Query("key") apiKey: String,
