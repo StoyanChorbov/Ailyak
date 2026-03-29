@@ -15,10 +15,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import aubg.hack.ailyak.data.model.CellRadioType
 import aubg.hack.ailyak.viewmodel.CellTowerViewModel
+import android.content.Context
 
 @OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("MissingPermission")
@@ -28,21 +31,22 @@ fun CellTowerScreen(viewModel: CellTowerViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     val items by viewModel.filteredItems.collectAsState()
 
-    val permissions = rememberMultiplePermissionsState(
-        listOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.READ_PHONE_STATE
-        )
-    )
+    val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    val phoneStatePermission = rememberPermissionState(Manifest.permission.READ_PHONE_STATE)
 
-    LaunchedEffect(permissions.allPermissionsGranted) {
-        if (permissions.allPermissionsGranted) {
-            LocationServices.getFusedLocationProviderClient(context)
-                .lastLocation.addOnSuccessListener { loc ->
-                    loc?.let { viewModel.load(it) }
-                }
+    // Load tower data as soon as location is granted; phone-state is optional.
+    LaunchedEffect(locationPermission.status.isGranted) {
+        if (locationPermission.status.isGranted) {
+            requestTowerLoad(context, viewModel)
         } else {
-            permissions.launchMultiplePermissionRequest()
+            locationPermission.launchPermissionRequest()
+        }
+    }
+
+    // Ask for phone-state separately so connected-tower highlighting can still work.
+    LaunchedEffect(locationPermission.status.isGranted, phoneStatePermission.status.isGranted) {
+        if (locationPermission.status.isGranted && !phoneStatePermission.status.isGranted) {
+            phoneStatePermission.launchPermissionRequest()
         }
     }
 
@@ -91,12 +95,7 @@ fun CellTowerScreen(viewModel: CellTowerViewModel = hiltViewModel()) {
                     Spacer(Modifier.height(4.dp))
                     Text(uiState.error!!, style = MaterialTheme.typography.bodySmall)
                     Spacer(Modifier.height(12.dp))
-                    Button(onClick = {
-                        LocationServices.getFusedLocationProviderClient(context)
-                            .lastLocation.addOnSuccessListener { loc ->
-                                loc?.let { viewModel.load(it) }
-                            }
-                    }) { Text("Retry") }
+                    Button(onClick = { requestTowerLoad(context, viewModel) }) { Text("Retry") }
                 }
                 items.isEmpty() && !uiState.isLoading -> Text(
                     "No cell towers found nearby.",
@@ -113,7 +112,8 @@ fun CellTowerScreen(viewModel: CellTowerViewModel = hiltViewModel()) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    items(items, key = { it.id }) { tower ->
+                    // Cell IDs can repeat across areas/radios, so keep list keys index-based.
+                    items(items) { tower ->
                         CellTowerCard(tower = tower)
                     }
                     item {
@@ -126,6 +126,22 @@ fun CellTowerScreen(viewModel: CellTowerViewModel = hiltViewModel()) {
                     }
                 }
             }
+        }
+    }
+}
+
+@SuppressLint("MissingPermission")
+private fun requestTowerLoad(context: Context, viewModel: CellTowerViewModel) {
+    val locationClient = LocationServices.getFusedLocationProviderClient(context)
+    locationClient.lastLocation.addOnSuccessListener { lastKnownLocation ->
+        if (lastKnownLocation != null) {
+            viewModel.load(lastKnownLocation)
+        } else {
+            locationClient
+                .getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
+                .addOnSuccessListener { currentLocation ->
+                    currentLocation?.let(viewModel::load)
+                }
         }
     }
 }

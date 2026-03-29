@@ -29,10 +29,10 @@ class CellTowerRepository @Inject constructor(
     suspend fun getNearbyCellTowers(
         lat: Double,
         lng: Double,
-        radiusDeg: Double = 0.05   // ~5.5km
+        radiusMeters: Double = 900.0
     ): Result<List<CellTowerUi>> {
         return try {
-            val bbox = "${lat - radiusDeg},${lng - radiusDeg},${lat + radiusDeg},${lng + radiusDeg}"
+            val bbox = buildBbox(lat = lat, lng = lng, halfSideMeters = radiusMeters)
             val response = api.getCellsInArea(
                 apiKey = "pk.a38c321cdcb3c8ab5c32ccb66b0c04ea",
                 bbox = bbox
@@ -146,5 +146,17 @@ class CellTowerRepository @Inject constructor(
         val dLam = Math.toRadians(lng2 - lng1)
         val a = sin(dPhi / 2).pow(2) + cos(phi1) * cos(phi2) * sin(dLam / 2).pow(2)
         return r * 2 * atan2(sqrt(a), sqrt(1 - a))
+    }
+
+    private fun buildBbox(lat: Double, lng: Double, halfSideMeters: Double): String {
+        val metersPerDegreeLat = 111_320.0
+        val latDelta = halfSideMeters / metersPerDegreeLat
+        val cosLat = cos(Math.toRadians(lat)).coerceAtLeast(0.01)
+        val lngDelta = halfSideMeters / (metersPerDegreeLat * cosLat)
+        val minLat = lat - latDelta
+        val minLng = lng - lngDelta
+        val maxLat = lat + latDelta
+        val maxLng = lng + lngDelta
+        return "$minLat,$minLng,$maxLat,$maxLng"
     }
 }

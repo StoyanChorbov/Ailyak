@@ -80,7 +80,7 @@ fun WaterIndexScreen(viewModel: WaterViewModel = hiltViewModel()) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    items(uiState.items, key = { it.id }) { source ->
+                    items(uiState.items.sortedBy { it.distanceMeters }, key = { it.id }) { source ->
                         WaterSourceCard(source = source)
                     }
                     item {
