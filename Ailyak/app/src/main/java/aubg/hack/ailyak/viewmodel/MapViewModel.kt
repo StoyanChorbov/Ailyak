@@ -118,4 +118,19 @@ class MapViewModel @Inject constructor(
             }
         }
     }
+
+    fun downloadDataForArea(lat: Double, lon: Double, radiusMeters: Double) {
+        viewModelScope.launch {
+
+            // You likely already have these methods — reuse them
+            loadWaterForMap(lat, lon)
+            loadCellTowersForMap(lat, lon)
+            loadSheltersForMap(lat, lon)
+
+            // If your API supports radius → pass it
+            // Otherwise you'll filter locally later
+
+            // Optional: persist locally here (DB / file)
+        }
+    }
 }

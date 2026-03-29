@@ -25,6 +25,7 @@ import com.mapbox.maps.extension.compose.MapEffect
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
+import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
@@ -85,6 +86,9 @@ private fun MapContent(viewModel: MapViewModel) {
     var selectedShelterId by remember { mutableStateOf<Long?>(null) }
     val selectedShelter = shelters.firstOrNull { it.id == selectedShelterId }
 
+    var selectedPoint by remember { mutableStateOf<Point?>(null) }
+    val downloadRadiusMeters = 10000.0 // 10km
+
     val mapViewportState = rememberMapViewportState {
         setCameraOptions { zoom(2.0); pitch(0.0) }
     }
@@ -112,7 +116,11 @@ private fun MapContent(viewModel: MapViewModel) {
         MapboxMap(
             modifier = Modifier.fillMaxSize(),
             mapViewportState = mapViewportState,
-            style = { MapStyle(style = mapStyleUrl) }
+            style = { MapStyle(style = mapStyleUrl) },
+            onMapClickListener = {
+                selectedPoint = it
+                true
+            }
         ) {
             // ── Blue location puck ─────────────────────────────────
             MapEffect(Unit) { mapView ->
@@ -146,19 +154,18 @@ private fun MapContent(viewModel: MapViewModel) {
             // ── Water source markers ───────────────────────────────
             if (showWaterSources) {
                 waterSources.forEach { source ->
-                    CircleAnnotation(
-                        point = Point.fromLngLat(source.lng, source.lat),
-                        onClick = {
-                            selectedWaterId =
-                                if (selectedWaterId == source.id) null else source.id
-                            true
-                        }
-                    ) {
-                        circleColor = Color(0xFF1565C0)
-                        circleRadius = 8.0
-                        circleStrokeColor = Color.White
-                        circleStrokeWidth = 2.0
+                    {
+                        selectedWaterId =
+                            if (selectedWaterId == source.id) null else source.id
+                        true
                     }
+                    CircleAnnotation(point = Point.fromLngLat(source.lng, source.lat),
+                        init = {
+                            circleColor = Color(0xFF1565C0)
+                            circleRadius = 8.0
+                            circleStrokeColor = Color.White
+                            circleStrokeWidth = 2.0
+                        })
                 }
 
                 // Name tooltip above tapped marker
@@ -215,19 +222,19 @@ private fun MapContent(viewModel: MapViewModel) {
 
                 shelters.forEach { shelter ->
                     key(shelter.id) {
+                        {
+                            selectedShelterId =
+                                if (selectedShelterId == shelter.id) null else shelter.id
+                            true
+                        }
                         CircleAnnotation(
                             point = Point.fromLngLat(shelter.lng, shelter.lat),
-                            onClick = {
-                                selectedShelterId =
-                                    if (selectedShelterId == shelter.id) null else shelter.id
-                                true
-                            }
-                        ) {
-                            circleColor = Color(0xFF2E7D32)
-                            circleRadius = 9.0
-                            circleStrokeColor = Color.White
-                            circleStrokeWidth = 2.0
-                        }
+                            init = {
+                                circleColor = Color(0xFF2E7D32)
+                                circleRadius = 9.0
+                                circleStrokeColor = Color.White
+                                circleStrokeWidth = 2.0
+                            })
                     }
                 }
 
@@ -243,6 +250,24 @@ private fun MapContent(viewModel: MapViewModel) {
                         }
                     }
                 }
+            }
+        }
+
+        selectedPoint?.let { point ->
+
+            // Center marker
+            CircleAnnotation(point = point) {
+                circleColor = Color.Red
+                circleRadius = 10.0
+                circleStrokeColor = Color.White
+                circleStrokeWidth = 2.0
+            }
+
+            // Radius visualization (rough circle using opacity)
+            CircleAnnotation(point = point) {
+                circleColor = Color.Red
+                circleRadius = downloadRadiusMeters / 5.0   // visual scaling
+                circleOpacity = 0.2
             }
         }
 
@@ -281,6 +306,25 @@ private fun MapContent(viewModel: MapViewModel) {
                     color = Color.Black
                 )
             }
+        }
+    }
+
+    if (selectedPoint != null) {
+        FloatingActionButton(
+            onClick = {
+                selectedPoint?.let { point ->
+                    viewModel.downloadDataForArea(
+                        lat = point.latitude(),
+                        lon = point.longitude(),
+                        radiusMeters = downloadRadiusMeters
+                    )
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 90.dp)
+        ) {
+            Text("⬇")
         }
     }
 }
