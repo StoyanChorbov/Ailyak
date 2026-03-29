@@ -2,9 +2,6 @@ package aubg.hack.ailyak.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import aubg.hack.ailyak.service.GbifService
-import aubg.hack.ailyak.service.PerenualService
-import aubg.hack.ailyak.service.PlantSafetyService
 import aubg.hack.ailyak.data.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -46,5 +43,4 @@ class PlantSafetyViewModel : ViewModel() {
                 PlantSafetyState.Error(it.message ?: "Unknown error")
             }
         }
-    }
-}
+    }}
