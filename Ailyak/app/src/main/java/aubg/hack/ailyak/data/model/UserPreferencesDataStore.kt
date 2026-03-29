@@ -3,17 +3,18 @@ package aubg.hack.ailyak.data.model
 import android.content.Context
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import aubg.hack.ailyak.security.KeystoreCrypto
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.text.get
 
 val Context.dataStore by preferencesDataStore(name = "user_prefs")
 
 @Singleton
 class UserPreferencesDataStore @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val crypto: KeystoreCrypto
 ) {
     companion object {
         val DARK_THEME              = booleanPreferencesKey("dark_theme")
@@ -30,8 +31,12 @@ class UserPreferencesDataStore @Inject constructor(
     val darkTheme             = context.dataStore.data.map { it[DARK_THEME] ?: false }
     val batterySaver          = context.dataStore.data.map { it[BATTERY_SAVER] ?: false }
     val mapStyle              = context.dataStore.data.map { it[MAP_STYLE] ?: "outdoors" }
-    val emergencyContactName  = context.dataStore.data.map { it[EMERGENCY_CONTACT_NAME] ?: "" }
-    val emergencyContactPhone = context.dataStore.data.map { it[EMERGENCY_CONTACT_PHONE] ?: "" }
+    val emergencyContactName  = context.dataStore.data.map {
+        crypto.decryptOrPlain(it[EMERGENCY_CONTACT_NAME] ?: "")
+    }
+    val emergencyContactPhone = context.dataStore.data.map {
+        crypto.decryptOrPlain(it[EMERGENCY_CONTACT_PHONE] ?: "")
+    }
     val trackingIntervalMin   = context.dataStore.data.map { it[TRACKING_INTERVAL_MIN] ?: 3 }
     val notifyNoConnection    = context.dataStore.data.map { it[NOTIFY_NO_CONNECTION] ?: true }
     val notifyNoGps           = context.dataStore.data.map { it[NOTIFY_NO_GPS] ?: true }
@@ -41,7 +46,14 @@ class UserPreferencesDataStore @Inject constructor(
         context.dataStore.edit { it[key] = value }
     }
     suspend fun set(key: Preferences.Key<String>, value: String) {
-        context.dataStore.edit { it[key] = value }
+        context.dataStore.edit {
+            val safeValue = if (key == EMERGENCY_CONTACT_NAME || key == EMERGENCY_CONTACT_PHONE) {
+                crypto.encrypt(value)
+            } else {
+                value
+            }
+            it[key] = safeValue
+        }
     }
     suspend fun set(key: Preferences.Key<Int>, value: Int) {
         context.dataStore.edit { it[key] = value }

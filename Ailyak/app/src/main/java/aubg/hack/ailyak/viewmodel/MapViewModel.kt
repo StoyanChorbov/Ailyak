@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import aubg.hack.ailyak.data.model.Result
-import aubg.hack.ailyak.db.dao.PathPointDao
 import aubg.hack.ailyak.db.model.PathPointEntity
+import aubg.hack.ailyak.db.repository.PathHistoryRepository
 import aubg.hack.ailyak.https.NetworkMonitor
 import aubg.hack.ailyak.ui.survivalguide.data.CellTowerRepository
 import aubg.hack.ailyak.data.model.CellTowerUi
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
-    pathPointDao: PathPointDao,
+    pathHistoryRepository: PathHistoryRepository,
     private val waterRepository: WaterRepository,
     private val cellTowerRepository: CellTowerRepository,
     private val shelterRepository: ShelterRepository,
@@ -36,7 +36,7 @@ class MapViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), true)
 
     // ── Path tracking ──────────────────────────────────────────────
-    val pathPoints: StateFlow<List<PathPointEntity>> = pathPointDao.getAllPoints()
+    val pathPoints: StateFlow<List<PathPointEntity>> = pathHistoryRepository.observeAllPoints()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     val connectionLostPoint: StateFlow<PathPointEntity?> = pathPoints.map { points ->
