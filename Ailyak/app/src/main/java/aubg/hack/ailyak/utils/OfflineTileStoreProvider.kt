@@ -1,4 +1,4 @@
-package aubg.hack.ailyak.ui.components
+package aubg.hack.ailyak.utils
 
 import com.mapbox.common.TileStore
 

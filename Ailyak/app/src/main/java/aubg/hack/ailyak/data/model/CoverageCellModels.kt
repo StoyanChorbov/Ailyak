@@ -1,7 +1,5 @@
 package aubg.hack.ailyak.data.model
 
-import com.google.gson.annotations.SerializedName
-
 data class OpenCellIdResponse(
  val count: Int,
  val cells: List<CellTowerItem>

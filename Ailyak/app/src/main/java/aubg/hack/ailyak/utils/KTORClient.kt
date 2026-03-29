@@ -1,4 +1,4 @@
-package aubg.hack.ailyak.https
+package aubg.hack.ailyak.utils
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*

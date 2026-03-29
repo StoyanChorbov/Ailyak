@@ -1,7 +1,7 @@
 package aubg.hack.ailyak.service
 
 import android.util.Log
-import aubg.hack.ailyak.ui.components.OfflineTileStoreProvider
+import aubg.hack.ailyak.utils.OfflineTileStoreProvider
 import com.mapbox.common.TileRegionLoadOptions
 import com.mapbox.common.TileStore
 import com.mapbox.geojson.Point
