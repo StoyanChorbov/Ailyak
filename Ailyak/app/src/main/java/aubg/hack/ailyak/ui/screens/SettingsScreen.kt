@@ -32,14 +32,14 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
         // ─────────────────────────────────────────────────────────
         // APPEARANCE
         // ─────────────────────────────────────────────────────────
-        SettingsSectionHeader("Appearance")
+//        SettingsSectionHeader("Appearance")
 
-        SettingsToggleRow(
-            title = "Dark Theme",
-            subtitle = "Switch to dark mode",
-            checked = state.darkTheme,
-            onCheckedChange = { viewModel.setDarkTheme(it) }
-        )
+//        SettingsToggleRow(
+//            title = "Dark Theme",
+//            subtitle = "Switch to dark mode",
+//            checked = state.darkTheme,
+//            onCheckedChange = { viewModel.setDarkTheme(it) }
+//        )
 
         SettingsSectionHeader("Map Style")
         MapStyleSelector(
