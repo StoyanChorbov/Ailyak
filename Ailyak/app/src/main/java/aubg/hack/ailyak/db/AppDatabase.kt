@@ -3,12 +3,14 @@ package aubg.hack.ailyak.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import aubg.hack.ailyak.db.dao.CachedAnimalDao
+import aubg.hack.ailyak.db.dao.CachedCellTowerDao
 import aubg.hack.ailyak.db.dao.CachedPlantDao
 import aubg.hack.ailyak.db.dao.CachedWaterDao
 import aubg.hack.ailyak.db.dao.PathPointDao
 import aubg.hack.ailyak.db.model.CachedPlantEntity
 import aubg.hack.ailyak.db.model.CachedWaterEntity
 import aubg.hack.ailyak.db.model.CachedAnimalEntity
+import aubg.hack.ailyak.db.model.CachedCellTowerEntity
 import aubg.hack.ailyak.db.model.EncryptedPathPointEntity
 
 @Database(
@@ -16,9 +18,10 @@ import aubg.hack.ailyak.db.model.EncryptedPathPointEntity
         EncryptedPathPointEntity::class,
         CachedPlantEntity::class,
         CachedWaterEntity::class,
-        CachedAnimalEntity::class
+        CachedAnimalEntity::class,
+        CachedCellTowerEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -27,4 +30,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun cachedWaterDao(): CachedWaterDao
 
     abstract fun cachedAnimalDao(): CachedAnimalDao
+    abstract fun cachedCellTowerDao(): CachedCellTowerDao
 }

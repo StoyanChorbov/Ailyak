@@ -195,7 +195,7 @@ private fun MapContent(viewModel: MapViewModel) {
                                 )
                             )
                         ) {
-                            fillColor = Color(overlay.color).copy(alpha = 0.16f)
+                            fillColor = Color(overlay.color).copy(alpha = 0.1f)
                         }
                     }
                 }

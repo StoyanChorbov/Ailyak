@@ -18,12 +18,17 @@ import aubg.hack.ailyak.data.model.CellRadioType
 import aubg.hack.ailyak.data.model.CellTowerItem
 import aubg.hack.ailyak.data.model.CellTowerUi
 import aubg.hack.ailyak.data.model.DeviceCellInfo
+import aubg.hack.ailyak.db.dao.CachedCellTowerDao
+import aubg.hack.ailyak.db.model.CachedCellTowerEntity
 import aubg.hack.ailyak.https.CellTowerApiService
 
 class CellTowerRepository @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val api: CellTowerApiService
+    private val api: CellTowerApiService,
+    private val dao: CachedCellTowerDao
 ) {
+    private val cacheTtlMs    = 6 * 60 * 60 * 1000L  // 6 hours
+    private val cacheRadiusKm = 2.0
     @SuppressLint("MissingPermission")
     @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     suspend fun getNearbyCellTowers(
@@ -31,7 +36,16 @@ class CellTowerRepository @Inject constructor(
         lng: Double,
         radiusMeters: Double = 900.0
     ): Result<List<CellTowerUi>> {
+        val cached = dao.getCached(since = System.currentTimeMillis() - cacheTtlMs)
+        if (cached.isNotEmpty()) {
+            val cLat = cached.first().cachedLat
+            val cLng = cached.first().cachedLng
+            if (haversineMeters(lat, lng, cLat, cLng) < cacheRadiusKm) {
+                return Result.Success(cached.map { it.toCellTowerUiItem() })
+            }
+        }
         return try {
+
             val bbox = buildBbox(lat = lat, lng = lng, halfSideMeters = radiusMeters)
             val response = api.getCellsInArea(
                 apiKey = "pk.a38c321cdcb3c8ab5c32ccb66b0c04ea",
@@ -43,6 +57,9 @@ class CellTowerRepository @Inject constructor(
             val items = response.cells
                 .map { it.toUiItem(lat, lng, deviceCells) }
                 .sortedBy { it.distanceMeters }
+
+            dao.clearAll()
+            dao.insertAll(items.map { it.toEntity(lat, lng) })
 
             Result.Success(items)
         } catch (e: Exception) {
@@ -159,4 +176,29 @@ class CellTowerRepository @Inject constructor(
         val maxLng = lng + lngDelta
         return "$minLat,$minLng,$maxLat,$maxLng"
     }
+
+    fun CachedCellTowerEntity.toCellTowerUiItem(): CellTowerUi =
+        CellTowerUi(
+            id,
+            lat,
+            lng,
+            radio,
+            signalStrength,
+            rangeMeters,
+            samples,distanceMeters
+        )
 }
+
+private fun CellTowerUi.toEntity(lat: Double, lng: Double) =
+    CachedCellTowerEntity(
+        id,
+        lat,
+        lng,
+        radio,
+        signalStrength,
+        rangeMeters,
+        samples,
+        distanceMeters,
+        cachedLat = lat,
+        cachedLng = lng,
+    )

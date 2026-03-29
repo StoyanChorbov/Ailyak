@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import aubg.hack.ailyak.db.AppDatabase
 import aubg.hack.ailyak.db.dao.CachedAnimalDao
+import aubg.hack.ailyak.db.dao.CachedCellTowerDao
 import aubg.hack.ailyak.db.dao.CachedPlantDao
 import aubg.hack.ailyak.db.dao.CachedWaterDao
 import aubg.hack.ailyak.db.dao.PathPointDao
@@ -44,4 +45,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideCachedAnimalDao(db: AppDatabase): CachedAnimalDao = db.cachedAnimalDao()
+
+    @Provides
+    @Singleton
+    fun provideCachedCellTowers(db: AppDatabase): CachedCellTowerDao = db.cachedCellTowerDao()
 }
