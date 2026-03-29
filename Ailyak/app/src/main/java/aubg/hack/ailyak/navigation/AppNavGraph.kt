@@ -81,9 +81,9 @@ sealed class Screen(
 fun AppNavGraph() {
     val navController = rememberNavController()
     val items = listOf(
-        Screen.Map,
         Screen.Plants,
         Screen.Water,
+        Screen.Map,
         Screen.Animals,
         Screen.Settings
     )
