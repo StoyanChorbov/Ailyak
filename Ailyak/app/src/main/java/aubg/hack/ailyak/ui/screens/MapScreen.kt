@@ -26,11 +26,16 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
+import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.extension.compose.style.MapStyle
 import com.mapbox.maps.plugin.PuckBearing
 import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
 import com.mapbox.maps.plugin.locationcomponent.location
+import kotlin.math.asin
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -167,7 +172,23 @@ private fun MapContent(viewModel: MapViewModel) {
 
             if (showCellularHeatmap) {
                 cellTowers.forEach { tower ->
-                    key(tower.id) {
+                    key("${tower.id}_${tower.lat}_${tower.lng}") {
+                        tower.rangeMeters
+                            ?.takeIf { it > 0 }
+                            ?.let { rangeMeters ->
+                                PolygonAnnotation(
+                                    points = listOf(
+                                        createCirclePolygonPoints(
+                                            centerLat = tower.lat,
+                                            centerLng = tower.lng,
+                                            radiusMeters = rangeMeters.toDouble()
+                                        )
+                                    )
+                                ) {
+                                    fillColor = Color(tower.radio.color()).copy(alpha = 0.16f)
+                                }
+                            }
+
                         CircleAnnotation(
                             point = Point.fromLngLat(tower.lng, tower.lat)
                         ) {
@@ -255,6 +276,33 @@ private fun MapContent(viewModel: MapViewModel) {
             }
         }
     }
+}
+
+private fun createCirclePolygonPoints(
+    centerLat: Double,
+    centerLng: Double,
+    radiusMeters: Double,
+    segments: Int = 48
+): List<Point> {
+    val earthRadiusMeters = 6_371_000.0
+    val angularDistance = radiusMeters / earthRadiusMeters
+    val latRad = Math.toRadians(centerLat)
+    val lngRad = Math.toRadians(centerLng)
+
+    val ring = (0..segments).map { step ->
+        val bearing = (2.0 * Math.PI * step) / segments
+        val pointLat = asin(
+            sin(latRad) * cos(angularDistance) +
+                cos(latRad) * sin(angularDistance) * cos(bearing)
+        )
+        val pointLng = lngRad + atan2(
+            sin(bearing) * sin(angularDistance) * cos(latRad),
+            cos(angularDistance) - sin(latRad) * sin(pointLat)
+        )
+        Point.fromLngLat(Math.toDegrees(pointLng), Math.toDegrees(pointLat))
+    }
+
+    return ring
 }
 
 // ── Layer toggle menu ──────────────────────────────────────────────
